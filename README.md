@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/alvinoktavianus/pi-accounts.svg?branch=master)](https://travis-ci.org/alvinoktavianus/pi-accounts)
 # PI Accounts
 ### How to install
 1. Make sure you have local php with mysql installed (you can get it using [XAMPP](https://www.apachefriends.org/index.html)
