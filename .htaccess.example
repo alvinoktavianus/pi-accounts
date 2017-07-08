@@ -2,4 +2,10 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
-SetEnv CI_ENV development
+
+SetEnv CI_ENV       development
+SetEnv HOST_URL     
+SetEnv DB_HOST      localhost
+SetEnv DB_USERNAME  
+SetEnv DB_PASSWORD  
+SetEnv DB_NAME      
