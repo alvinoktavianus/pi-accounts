@@ -9,3 +9,5 @@ SetEnv DB_HOST      localhost
 SetEnv DB_USERNAME  
 SetEnv DB_PASSWORD  
 SetEnv DB_NAME      
+SetEnv ROOT_AUTH    
+SetEnv ROOT_ROLE    
