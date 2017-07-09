@@ -6,13 +6,18 @@ php:
 
 before_install:
   - sudo apt-get update > /dev/null
+  - nvm install 6.11
+  - npm install -g bower gulp
 
 install:
   - sudo apt-get install -y --force-yes php5-cgi php5-mysql
   - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - npm install
+  - bower install
 
 script:
   - composer update
+  - gulp test
 
 dist:
   - trusty

@@ -75,3 +75,4 @@ gulp.task("createDevScripts", ['concatVendorScripts', 'concatApplicationScripts'
 gulp.task("createProdScripts", ['createDevScripts', 'minifyVendorScripts', 'minifyApplicationScripts']);
 gulp.task("createDevStyles", ['compileVendorStyles', 'compileApplicationStyles', 'copyFonts']);
 gulp.task("createProdStyles", ['createDevStyles', 'minifyVendorStyles', 'minifyApplicationStyles']);
+gulp.task("test", ['createDevScripts', 'createDevStyles'])
