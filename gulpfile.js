@@ -63,8 +63,15 @@ gulp.task("minifyApplicationStyles", function () {
         .pipe(gulp.dest("assets/css"));
 });
 
+gulp.task('copyFonts', function() {
+    gulp.src([
+            'bower_components/bootstrap/fonts/glyphicons-halflings-regular.*'
+        ])
+        .pipe(gulp.dest('assets/fonts/'));
+});
+
 // Single task
 gulp.task("createDevScripts", ['concatVendorScripts', 'concatApplicationScripts']);
 gulp.task("createProdScripts", ['createDevScripts', 'minifyVendorScripts', 'minifyApplicationScripts']);
-gulp.task("createDevStyles", ['compileVendorStyles', 'compileApplicationStyles']);
+gulp.task("createDevStyles", ['compileVendorStyles', 'compileApplicationStyles', 'copyFonts']);
 gulp.task("createProdStyles", ['createDevStyles', 'minifyVendorStyles', 'minifyApplicationStyles']);
