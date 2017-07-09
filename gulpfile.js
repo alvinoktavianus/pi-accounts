@@ -7,10 +7,16 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     less = require('gulp-less'),
     cleanCSS = require('gulp-clean-css'),
-    jsFiles = ['js_src/*'];
+    jsFiles = ['src/js/*'];
 
-gulp.task("concatScripts", function () {
-    gulp.src(mainBowerFiles({ filter: '**/*.js' }).concat(jsFiles))
+gulp.task("concatVendorScripts", function () {
+    gulp.src(mainBowerFiles({ filter: '**/*.js' }))
+        .pipe(concat("vendor.js"))
+        .pipe(gulp.dest("assets/js"));
+});
+
+gulp.task("concatApplicationScripts", function () {
+    gulp.src(['src/js/*.js'])
         .pipe(concat("application.js"))
         .pipe(gulp.dest("assets/js"));
 });
@@ -22,7 +28,14 @@ gulp.task("compileLess", function () {
         .pipe(gulp.dest("assets/css"));
 });
 
-gulp.task("minifyScripts", function () {
+gulp.task("minifyVendorScripts", function () {
+    gulp.src("assets/js/vendor.js")
+        .pipe(uglify())
+        .pipe(rename('vendor.min.js'))
+        .pipe(gulp.dest("assets/js"));
+});
+
+gulp.task("minifyApplicationScripts", function () {
     gulp.src("assets/js/application.js")
         .pipe(uglify())
         .pipe(rename('application.min.js'))
