@@ -48,3 +48,7 @@ gulp.task("minifyStyles", function () {
         .pipe(rename('application.min.css'))
         .pipe(gulp.dest("assets/css"));
 });
+
+// Single task
+gulp.task("createDevScripts", ['concatVendorScripts', 'concatApplicationScripts']);
+gulp.task("createProdScripts", ['createDevScripts', 'minifyVendorScripts', 'minifyApplicationScripts']);
