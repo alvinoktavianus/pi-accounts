@@ -21,8 +21,15 @@ gulp.task("concatApplicationScripts", function () {
         .pipe(gulp.dest("assets/js"));
 });
 
-gulp.task("compileLess", function () {
+gulp.task("compileVendorStyles", function () {
     gulp.src(mainBowerFiles({ filter: '**/*.less' }))
+        .pipe(less())
+        .pipe(concat("vendor.css"))
+        .pipe(gulp.dest("assets/css"));
+});
+
+gulp.task("compileApplicationStyles", function () {
+    gulp.src(['src/css/*.css'])
         .pipe(less())
         .pipe(concat("application.css"))
         .pipe(gulp.dest("assets/css"));
@@ -42,7 +49,14 @@ gulp.task("minifyApplicationScripts", function () {
         .pipe(gulp.dest("assets/js"));
 });
 
-gulp.task("minifyStyles", function () {
+gulp.task("minifyVendorStyles", function () {
+    gulp.src("assets/css/vendor.css")
+        .pipe(cleanCSS())
+        .pipe(rename('vendor.min.css'))
+        .pipe(gulp.dest("assets/css"));
+});
+
+gulp.task("minifyApplicationStyles", function () {
     gulp.src("assets/css/application.css")
         .pipe(cleanCSS())
         .pipe(rename('application.min.css'))
@@ -52,3 +66,5 @@ gulp.task("minifyStyles", function () {
 // Single task
 gulp.task("createDevScripts", ['concatVendorScripts', 'concatApplicationScripts']);
 gulp.task("createProdScripts", ['createDevScripts', 'minifyVendorScripts', 'minifyApplicationScripts']);
+gulp.task("createDevStyles", ['compileVendorStyles', 'compileApplicationStyles']);
+gulp.task("createProdStyles", ['createDevStyles', 'minifyVendorStyles', 'minifyApplicationStyles']);
