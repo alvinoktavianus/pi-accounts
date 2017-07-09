@@ -30,3 +30,6 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 
 user_guide/
 .htaccess
+bower_components/
+node_modules/
+assets/
