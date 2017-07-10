@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="piAccounts">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -70,10 +70,16 @@
 
     <?php if ($this->input->server('CI_ENV') == 'development') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.js"); ?>"></script>
+        <script type="text/javascript">
+            var app = angular.module('piAccounts', [])
+        </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.js"); ?>"></script>
     <?php endif; ?>
     <?php if ($this->input->server('CI_ENV') == 'production') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.min.js"); ?>"></script>
+        <script type="text/javascript">
+            var app = angular.module('piAccounts', [])
+        </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.min.js"); ?>"></script>
     <?php endif; ?>
 
