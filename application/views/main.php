@@ -8,8 +8,7 @@
     <?php if ($this->input->server('CI_ENV') == 'development') : ?>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/vendor.css"); ?>">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/application.css"); ?>">
-    <?php endif; ?>
-    <?php if ($this->input->server('CI_ENV') == 'production') : ?>
+    <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/vendor.min.css"); ?>">
         <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/application.min.css"); ?>">
     <?php endif; ?>
@@ -31,16 +30,14 @@
                 <ul class="nav navbar-nav">
                     <?php if ($this->session->userdata('user_session')): ?>
                         
-                    <?php endif; ?>
-                    <?php if (!$this->session->userdata('user_session')): ?>
+                    <?php elseif (!$this->session->userdata('user_session')): ?>
                         <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url("gallery") ?>">Gallery</a></li>
                     <?php endif; ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <?php if ($this->session->userdata('user_session')): ?>
                         <li><a href="<?php echo base_url("logout") ?>">Logout</a></li>
-                    <?php endif; ?>
-                    <?php if (!$this->session->userdata('user_session')): ?>
+                    <?php elseif (!$this->session->userdata('user_session')): ?>
                         <li class="<?php if ($pageKey == 'login') echo "active"; ?>"><a href="<?php echo base_url("login") ?>">Login</a></li>
                     <?php endif; ?>
                 </ul>
@@ -74,8 +71,7 @@
             var app = angular.module('piAccounts', [])
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.js"); ?>"></script>
-    <?php endif; ?>
-    <?php if ($this->input->server('CI_ENV') == 'production') : ?>
+    <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.min.js"); ?>"></script>
         <script type="text/javascript">
             var app = angular.module('piAccounts', [])
