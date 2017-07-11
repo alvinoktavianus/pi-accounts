@@ -1,3 +1,9 @@
+<?php if ($this->session->flashdata('errors')): ?>
+    <div class="alert alert-danger" role="alert">
+        <strong><?php echo $this->session->flashdata('errors'); ?></strong>
+    </div>
+<?php endif; ?>
+
 <?php echo form_open(base_url('login/do_login'), array('name' => 'loginForm', 'novalidate' => 'true')); ?>
 
     <div class="form-group" ng-class="{ 'has-error' : loginForm.email.$invalid && !loginForm.email.$pristine, 'has-success': loginForm.email.$valid }">
