@@ -75,7 +75,7 @@
                                 $this->load->view('home/HomeAdmin');
                                 break;
                             case 'category':
-                                $this->load->view('category/CategoryAdmin');
+                                $this->load->view('category/CategoryAdmin', $viewData);
                                 break;
                             case 'gallery':
                                 $this->load->view('home/GalleryAdmin');
