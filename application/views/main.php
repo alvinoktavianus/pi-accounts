@@ -24,12 +24,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php if ($this->session->userdata('user_session')) { echo base_url(); } else { echo base_url('login'); } ?>">PRO Importir</a>
+                <a class="navbar-brand" href="<?php if ($this->session->userdata('user_session')) { echo base_url(); } else { echo base_url('login'); } ?>">Pro Importir</a>
             </div>
             <div class="collapse navbar-collapse" id="main-navbar">
                 <ul class="nav navbar-nav">
                     <?php if ($this->session->userdata('user_session')): ?>
-                        
+                        <li class="<?php if ($pageKey == 'home') echo "active"; ?>"><a href="<?php echo base_url(); ?>">Home</a></li>
+                        <?php if ($this->session->userdata('user_session')['role'] == 'admin'): ?>
+                            <li class="<?php if ($pageKey == 'category') echo "active"; ?>"><a href="<?php echo base_url('categories'); ?>">Categories</a></li>
+                            <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
+                            <li class="<?php if ($pageKey == 'employee') echo "active"; ?>"><a href="<?php echo base_url('employees'); ?>">Employees</a></li>
+                        <?php elseif ($this->session->userdata('user_session')['role'] == 'user'): ?>
+
+                        <?php endif; ?>
                     <?php elseif (!$this->session->userdata('user_session')): ?>
                         <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url("gallery") ?>">Gallery</a></li>
                     <?php endif; ?>
@@ -50,12 +57,21 @@
             // This code will handle all of the pages that will be rendered onto application
             if (!$this->session->userdata('user_session')) {
                 // Render UI if users have not been logged in
-                $this->load->view('login/login');
+                switch ($pageKey) {
+                    case 'login':
+                        $this->load->view('login/login');
+                        break;
+                }
             } else {
                 // Render UI if users already logged in
                 switch ($this->session->userdata('user_session')['role']) {
                     case 'admin':
                         // Handle UI for admin case
+                        switch ($pageKey) {
+                            case 'value':
+                                $this->load->view('home/HomeAdmin');
+                                break;
+                        }
                         break;
                     case 'user':
                         // Handle UI for user case

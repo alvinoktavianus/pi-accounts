@@ -7,7 +7,7 @@ class Login extends CI_Controller {
     {
         if (!$this->session->userdata('user_session')) {
             $data = array(
-                'title' => 'Login | PRO Importir',
+                'title' => 'Login | Pro Importir',
                 'pageKey' => 'login'
             );
             $this->load->view('main', $data);

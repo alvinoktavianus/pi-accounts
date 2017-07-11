@@ -8,7 +8,11 @@ class Home extends CI_Controller {
         if (!$this->session->userdata('user_session')) {
             redirect('login','refresh');
         } else {
-            
+            $data = array(
+                'pageKey' => 'home',
+                'title' => 'Home | Pro Importir'
+            );
+            $this->load->view('main', $data);
         }
     }
 
