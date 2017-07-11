@@ -61,6 +61,9 @@
                     case 'login':
                         $this->load->view('login/login');
                         break;
+                    case 'register':
+                        $this->load->view('register/register');
+                        break;
                 }
             } else {
                 // Render UI if users already logged in
@@ -68,8 +71,17 @@
                     case 'admin':
                         // Handle UI for admin case
                         switch ($pageKey) {
-                            case 'value':
+                            case 'home':
                                 $this->load->view('home/HomeAdmin');
+                                break;
+                            case 'category':
+                                $this->load->view('category/CategoryAdmin');
+                                break;
+                            case 'gallery':
+                                $this->load->view('home/GalleryAdmin');
+                                break;
+                            case 'employee':
+                                $this->load->view('home/EmployeeAdmin');
                                 break;
                         }
                         break;
