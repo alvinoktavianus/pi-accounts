@@ -19,7 +19,7 @@
     </div>
 
     <div class="form-group">
-        <button type="submit" class="btn btn-default" ng-disabled="loginForm.$invalid">Log In</button>
+        <button type="submit" class="btn btn-default" ng-disabled="loginForm.$invalid" ng-cloak>Log In</button>
     </div>
 
 <?php echo form_close(); ?>
