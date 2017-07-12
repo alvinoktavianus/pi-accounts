@@ -36,5 +36,34 @@
 <?php if (empty($categories)): ?>
     <h4>No categories</h4>
 <?php else: ?>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Category Name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($categories as $index => $category): ?>
+                    <tr>
+                        <td><?php echo $index+1; ?></td>
+                        <td><?php echo $category->name; ?></td>
+                        <td>
+                            <?php if ($category->is_active == 1): ?>
 
+                            <?php elseif ($category->is_active == 0): ?>
+
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 <?php endif; ?>
