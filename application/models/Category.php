@@ -11,6 +11,13 @@ class Category extends CI_Model {
         return $category;
     }
 
+    public function insert_new_data($data)
+    {
+        $this->db->trans_start();
+        $this->db->insert('categories', $data);
+        $this->db->trans_complete();
+    }
+
 }
 
 /* End of file Category.php */
