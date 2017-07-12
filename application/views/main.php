@@ -1,17 +1,35 @@
-<!DOCTYPE html>
+<?php echo doctype('html5'); ?>
 <html lang="en" ng-app="piAccounts">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <?php
+        $meta = array(
+            array(
+                'name' => 'Content-type',
+                'content' => 'text/html; charset=utf-8', 'type' => 'equiv'
+            ),
+            array(
+                'name' => 'keywords',
+                'content' => 'proimportir, import, mudah'
+            ),
+            array(
+                'name' => 'description',
+                'content' => 'Pro Importir menyederhanakan proses import barang menjadi sangat mudah'
+            ),
+            array(
+                'name' => 'viewport',
+                'content' => 'width=device-width, initial-scale=1, user-scalable=0'
+            )
+        );
+        echo meta($meta);
+    ?>
     <title><?php echo $title; ?></title>
-    <?php if ($this->input->server('CI_ENV') == 'development') : ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/vendor.css"); ?>">
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/application.css"); ?>">
-    <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/vendor.min.css"); ?>">
-        <link rel="stylesheet" type="text/css" href="<?php echo base_url("assets/css/application.min.css"); ?>">
-    <?php endif; ?>
+    <?php
+        if ($this->input->server('CI_ENV') == 'development') {
+            echo link_tag(base_url('assets/css/vendor.css')) . link_tag(base_url('assets/css/application.css'));
+        } else if ($this->input->server('CI_ENV') == 'production') {
+            echo link_tag(base_url('assets/css/vendor.min.css')) . link_tag(base_url('assets/css/application.min.css'));
+        }
+    ?>
 </head>
 <body>
 
