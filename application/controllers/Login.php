@@ -32,17 +32,17 @@ class Login extends CI_Controller {
                 $this->load->model('user');
                 $resultUser = $this->user->find_by_email($email);
 
-                if (password_verify($password, $resultUser[0]->password) && !password_verify($resultUser[0]->role, $this->input->server('ROOT_ROLE'))) {
+                if (empty($resultUser)) {
+                    $error = "Please enter correct email and password";
+                    $this->session->set_flashdata('errors', $error);
+                    redirect('login','refresh');
+                } else if (password_verify($password, $resultUser[0]->password) && !password_verify($resultUser[0]->role, $this->input->server('ROOT_ROLE'))) {
                     $data = array(
                         'role' => $resultUser[0]->role,
                         'userId' => $resultUser[0]->id
                     );
                     $this->session->set_userdata('user_session', $data);
                     redirect('home','refresh');
-                } else {
-                    $error = "Please enter correct email and password";
-                    $this->session->set_flashdata('errors', $error);
-                    redirect('login','refresh');                    
                 }
             }
 
