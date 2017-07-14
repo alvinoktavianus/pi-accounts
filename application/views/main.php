@@ -125,13 +125,13 @@
     <?php if ($this->input->server('CI_ENV') == 'development') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', [])
+            var app = angular.module('piAccounts', ['dynamicNumber'])
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.js"); ?>"></script>
     <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.min.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', [])
+            var app = angular.module('piAccounts', ['dynamicNumber'])
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.min.js"); ?>"></script>
     <?php endif; ?>
