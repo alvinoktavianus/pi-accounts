@@ -3,12 +3,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Galleries extends CI_Controller {
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->model('category');
+    }
+
     public function index()
     {
         switch ($this->session->userdata('user_session')['role']) {
             case 'admin':
                 $viewData = array(
-                    'message' => 'Hello admin galleries'
+                    'message' => 'Hello admin galleries',
+                    'categories' => $this->category->create_category_dropdown()
                 );
                 break;
             case 'user':
@@ -28,6 +35,15 @@ class Galleries extends CI_Controller {
             'viewData' => $viewData
         );
         $this->load->view('main', $data);
+    }
+
+    public function do_add()
+    {
+        if ($this->session->userdata('user_session')['role'] == 'admin') {
+            
+        } else {
+            redirect('home','refresh');
+        }
     }
 
 }
