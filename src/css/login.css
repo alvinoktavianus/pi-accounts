@@ -42,7 +42,7 @@ div.logindiv input:focus { outline: none; }
 /* Label */
 
 div.logindiv label {
-	color: #000; 
+	color: #999; 
 	font-size: 18px;
 	font-weight: normal;
 	position: absolute;
@@ -221,4 +221,20 @@ div.logindiv .ripples.is-active .ripplesCircle {
     padding-bottom: 200%;
     opacity: 0;
   }
+}
+
+@media screen and (max-device-width: 480px) {
+	div.logindiv form {
+		width: 95%;
+		margin: 3em auto;
+	}
+
+	div.logindiv .group { 
+		margin-bottom: 40px; 
+	}
+
+	div.logindiv input {
+		font-size: 16px;
+		padding: 7px 7px 7px 3px;
+	}
 }
