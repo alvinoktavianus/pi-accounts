@@ -51,7 +51,7 @@
                         <?php if ($this->session->userdata('user_session')['role'] == 'admin'): ?>
                             <li class="<?php if ($pageKey == 'category') echo "active"; ?>"><a href="<?php echo base_url('categories'); ?>">Categories</a></li>
                             <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
-                            <li class="<?php if ($pageKey == 'employee') echo "active"; ?>"><a href="<?php echo base_url('employees'); ?>">Employees</a></li>
+                            <li class="<?php if ($pageKey == 'transaction') echo "active"; ?>"><a href="<?php echo base_url('transaction'); ?>">Transaction</a></li>
                         <?php elseif ($this->session->userdata('user_session')['role'] == 'user'): ?>
                             <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
                         <?php endif; ?>
@@ -103,8 +103,8 @@
                             case 'gallery':
                                 $this->load->view('gallery/GalleryAdmin', $viewData);
                                 break;
-                            case 'employee':
-                                $this->load->view('home/EmployeeAdmin');
+                            case 'transaction':
+                                $this->load->view('transaction/TransactionAdmin');
                                 break;
                             case 'profile':
                                 $this->load->view('profile/ProfileUser', $viewData);
