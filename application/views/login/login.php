@@ -28,6 +28,10 @@
     <button type="submit" class="button buttonBlue" ng-disabled="loginForm.$invalid" ng-cloak>LOGIN
         <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
     </button>
+    
+    <a href="<?php echo base_url('register'); ?>"><button type="button" class="button buttonGreen" ng-cloak>REGISTER
+        <div class="ripples buttonRipples"><span class="ripplesCircle"></span></div>
+    </button></a>
 </div>
 
 <?php echo form_close(); ?>

@@ -8,6 +8,13 @@ $(window, document, undefined).ready(function() {
       $this.removeClass('used');
   });
 
+  $('.regisformcss input').blur(function() {
+    var $this = $(this);
+    if ($this.val())
+      $this.addClass('used');
+    else
+      $this.removeClass('used');
+  });
   var $ripples = $('.ripples');
 
   $ripples.on('click.Ripples', function(e) {
