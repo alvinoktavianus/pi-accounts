@@ -1,5 +1,12 @@
 <div ng-controller="GalleryAdminCtrl">
-    <?php echo form_open(base_url('galleries/do_add'), array('name' => 'galleryForm', 'novalidate' => 'true')); ?>
+
+    <?php if ($this->session->flashdata('errors')): ?>
+        <div class="alert alert-danger" role="alert">
+            <strong><?php echo $this->session->flashdata('errors'); ?></strong>
+        </div>
+    <?php endif; ?>
+
+    <?php echo form_open_multipart(base_url('galleries/do_add'), array('name' => 'galleryForm', 'novalidate' => 'true')); ?>
 
     <fieldset>
         <legend>Gallery Data</legend>
@@ -32,7 +39,12 @@
     <fieldset>
         <legend>Images</legend>
 
-        <div class="table-responsive">
+        <div class="form-group">
+            <?php echo form_label('Categories', 'categories', array('class' => 'sr-only')); ?>
+            <input type="file" name="images[]" multiple class="form-control">
+        </div>
+
+        <!-- <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -43,10 +55,10 @@
                 <tbody>
                     <tr ng-repeat="image in images track by $index">
                         <td>
-                            <input type="file" name="filename[]" class="form-control">
+                            <input type="file" name="images[]" class="form-control">
                         </td>
                         <td>
-                            <input type="checkbox">
+                            <input type="checkbox" name="isPrimary[]">
                         </td>
                         <td>
                             <button class="btn btn-success" ng-click="addImage($event)">Add</button>
@@ -55,7 +67,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
     </fieldset>
 
     <div class="form-group">
