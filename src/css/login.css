@@ -23,6 +23,8 @@ div.logindiv .group {
 	margin-bottom: 45px; 
 }
 
+div.logindiv .regisformcss .group { margin-bottom: 35px; }
+
 div.logindiv input {
 	font-size: 18px;
 	padding: 10px 10px 10px 5px;
@@ -35,6 +37,7 @@ div.logindiv input {
 	border-radius: 0;
 	border-bottom: 1px solid #757575;
 }
+
 
 div.logindiv input:focus { outline: none; }
 
@@ -160,8 +163,14 @@ div.logindiv .buttonBlue {
   text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
 }
 
-div.logindiv .buttonBlue:hover { background: #357bd8; }
+div.logindiv .buttonGreen {
+  background: #2DE409;
+  text-shadow: 1px 1px 0 rgba(33, 185, 3, .5);
+  border-bottom: 2px solid #20C300;
+}
 
+div.logindiv .buttonBlue:hover { background: #357bd8; }
+div.logindiv .buttonGreen:hover { background: #25DC00; }
 
 /* Ripples container */
 

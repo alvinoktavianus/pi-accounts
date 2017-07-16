@@ -63,6 +63,7 @@
                     <?php if ($this->session->userdata('user_session')): ?>
                         <li><a href="<?php echo base_url("logout") ?>">Logout</a></li>
                     <?php elseif (!$this->session->userdata('user_session')): ?>
+                        <li class="<?php if ($pageKey == 'register') echo "active"; ?>"><a href="<?php echo base_url("register") ?>">Register</a></li>
                         <li class="<?php if ($pageKey == 'login') echo "active"; ?>"><a href="<?php echo base_url("login") ?>">Login</a></li>
                     <?php endif; ?>
                 </ul>
