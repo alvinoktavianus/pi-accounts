@@ -4,6 +4,12 @@
     </div>
 <?php endif; ?>
 
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="alert alert-success" role="alert">
+        <strong><?php echo $this->session->flashdata('success'); ?></strong>
+    </div>
+<?php endif; ?>
+
 <?php echo form_open_multipart(base_url('galleries/do_add'), array('name' => 'galleryForm', 'novalidate' => 'true')); ?>
 
 <fieldset>

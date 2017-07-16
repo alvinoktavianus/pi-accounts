@@ -7,6 +7,8 @@ class Galleries extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('category');
+        $this->load->model('gallery');
+        $this->load->model('image');
     }
 
     public function index()
@@ -41,25 +43,53 @@ class Galleries extends CI_Controller {
     {
         if ($this->session->userdata('user_session')['role'] == 'admin') {
             $this->form_validation->set_rules('name', 'Name', 'trim|required|min_length[5]|max_length[20]');
-            $this->form_validation->set_rules('baseprice', 'Base Price', 'trim|required|integer');
-            $this->form_validation->set_rules('sellprice', 'Sell Price', 'trim|required|greater_than[baseprice]|integer');
+            $this->form_validation->set_rules('baseprice', 'Base Price', 'trim|required');
+            $this->form_validation->set_rules('sellprice', 'Sell Price', 'trim|required');
             $this->form_validation->set_rules('categories', 'Categories', 'required');
+
+            $baseprice = (int)str_replace(' ', '', $this->input->post('baseprice'));
+            $sellprice = (int)str_replace(' ', '', $this->input->post('sellprice'));
 
             if (!$this->form_validation->run()) {
                 $errors = validation_errors();
                 $this->session->set_flashdata('errors', $errors);
+            } else if ($sellprice < $baseprice) {
+                $errors = "The Sell Price field must contain a number greater than Base Price.";
+                $this->session->set_flashdata('errors', $errors);
             } else {
+                $dataImages = null;
                 if ($_FILES['image']['name'] != "") {
                     $config['upload_path'] = './uploads/galleries/';
                     $config['allowed_types'] = 'gif|jpg|png';
                     $config['encrypt_name'] = true;
                     $this->upload->initialize($config);
                     if ($this->upload->do_upload('image')) {
-                        $data = $this->upload->data();
+                        $dataImages = $this->upload->data();
                     } else {
                         $this->session->set_flashdata('errors', $this->upload->display_errors());
                     }
                 }
+                $this->db->trans_start();
+                $dataInserted = array(
+                    'name' => $this->input->post('name'),
+                    'base_price' => $baseprice,
+                    'sell_price' => $sellprice,
+                    'category_id' => $this->input->post('categories'),
+                    'created_by' => $this->session->userdata('user_session')['userId'],
+                    'updated_by' => $this->session->userdata('user_session')['userId'],
+                );
+                $this->gallery->insert_new_gallery($dataInserted);
+                $latestGalleryId = $this->gallery->get_latest_galleries()->id;
+                $dataimages = array(
+                    'file_name' => $dataImages['file_name'],
+                    'gallery_id' => $latestGalleryId,
+                    'is_primary' => 1,
+                    'created_by' => $this->session->userdata('user_session')['userId'],
+                    'updated_by' => $this->session->userdata('user_session')['userId'],
+                );
+                $this->image->insert_new_image($dataimages);
+                $this->db->trans_complete();
+                $this->session->set_flashdata('success', "Successfully insert new gallery image");
             }
             redirect('galleries','refresh');
         } else {
