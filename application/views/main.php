@@ -131,7 +131,7 @@
     <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.min.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', ['dynamicNumber'])
+            var app = angular.module('piAccounts', ['dynamicNumber', 'angularFileUpload'])
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.min.js"); ?>"></script>
     <?php endif; ?>
