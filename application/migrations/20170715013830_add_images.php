@@ -14,7 +14,7 @@ class Migration_Add_images extends CI_Migration {
             array(
                 'id' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                     'auto_increment' => true
                 ),
@@ -24,7 +24,7 @@ class Migration_Add_images extends CI_Migration {
                 ),
                 'gallery_id' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                 ),
                 'is_primary' => array(
@@ -41,12 +41,12 @@ class Migration_Add_images extends CI_Migration {
                 ),
                 'created_by' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                 ),
                 'updated_by' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                 )
             )

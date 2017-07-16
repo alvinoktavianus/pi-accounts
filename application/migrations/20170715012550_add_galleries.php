@@ -14,7 +14,7 @@ class Migration_Add_galleries extends CI_Migration {
             array(
                 'id' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                     'auto_increment' => true
                 ),
@@ -24,17 +24,17 @@ class Migration_Add_galleries extends CI_Migration {
                 ),
                 'base_price' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                 ),
                 'sell_price' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                 ),
                 'category_id' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                 ),
                 'is_active' => array(
@@ -47,12 +47,12 @@ class Migration_Add_galleries extends CI_Migration {
                 ),
                 'created_by' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                 ),
                 'updated_by' => array(
                     'type' => 'INT',
-                    'constraint' => 5,
+                    'constraint' => 11,
                     'unsigned' => true,
                 )
             )

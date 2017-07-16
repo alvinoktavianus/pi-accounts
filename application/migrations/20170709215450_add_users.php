@@ -14,7 +14,7 @@ class Migration_Add_users extends CI_Migration {
            array(
               'id' => array(
                  'type' => 'INT',
-                 'constraint' => 5,
+                 'constraint' => 11,
                  'unsigned' => true,
                  'auto_increment' => true
               ),
