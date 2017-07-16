@@ -56,7 +56,7 @@
 
                         <?php endif; ?>
                     <?php elseif (!$this->session->userdata('user_session')): ?>
-                        <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url("gallery") ?>">Gallery</a></li>
+                        <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url("galleries") ?>">Galleries</a></li>
                     <?php endif; ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -82,6 +82,9 @@
                     case 'register':
                         $this->load->view('register/register');
                         break;
+                    case 'gallery':
+                        $this->load->view('gallery/GalleryGuest', $viewData);
+                        break;
                 }
             } else {
                 // Render UI if users already logged in
@@ -96,7 +99,7 @@
                                 $this->load->view('category/CategoryAdmin', $viewData);
                                 break;
                             case 'gallery':
-                                $this->load->view('home/GalleryAdmin');
+                                $this->load->view('gallery/GalleryAdmin', $viewData);
                                 break;
                             case 'employee':
                                 $this->load->view('home/EmployeeAdmin');
@@ -105,6 +108,14 @@
                         break;
                     case 'user':
                         // Handle UI for user case
+                        switch ($pageKey) {
+                            case 'home':
+                                $this->load->view('home/HomeUser');
+                                break;
+                            case 'gallery':
+                                $this->load->view('gallery/GalleryUser', $viewData);
+                                break;
+                        }
                         break;
                 }
             }
@@ -114,13 +125,13 @@
     <?php if ($this->input->server('CI_ENV') == 'development') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', [])
+            var app = angular.module('piAccounts', ['dynamicNumber'])
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.js"); ?>"></script>
     <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.min.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', [])
+            var app = angular.module('piAccounts', ['dynamicNumber'])
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.min.js"); ?>"></script>
     <?php endif; ?>

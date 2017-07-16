@@ -18,6 +18,18 @@ class Category extends CI_Model {
         $this->db->trans_complete();
     }
 
+    public function create_category_dropdown()
+    {
+        $this->db->trans_start();
+        $categories = $this->db->get_where('categories', array('is_active' => 1, 'is_deleted' => 0))->result();
+        $this->db->trans_complete();
+        $result = [];
+        foreach ($categories as $category) {
+            $result[$category->id] = $category->name;
+        }
+        return $result;
+    }
+
 }
 
 /* End of file Category.php */
