@@ -37,6 +37,15 @@ class Galleries extends CI_Controller {
         $this->load->view('main', $data);
     }
 
+    public function upload_images()
+    {
+        if ($this->session->userdata('user_session')['role'] == 'admin') {
+            
+        } else {
+            
+        }
+    }
+
     public function do_add()
     {
         if ($this->session->userdata('user_session')['role'] == 'admin') {

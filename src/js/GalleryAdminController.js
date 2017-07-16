@@ -1,6 +1,8 @@
-app.controller('GalleryAdminCtrl', ['$scope', function($scope) {
+app.controller('GalleryAdminCtrl', ['$scope', 'FileUploader', function($scope, FileUploader) {
 
-    $scope.galleryForm = {};
+    $scope.uploader = new FileUploader();
+
+    $scope.galleryform = {};
     $scope.images = [{}];
 
     $scope.addImage = function(event) {
