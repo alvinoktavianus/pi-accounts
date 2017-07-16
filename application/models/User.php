@@ -11,6 +11,11 @@ class User extends CI_Model {
         return $user;
     }
 
+    public function insert_new_user($data)
+    {
+        $this->db->insert('users', $data);
+    }
+
 }
 
 /* End of file User.php */

@@ -4,6 +4,12 @@
     </div>
 <?php endif; ?>
 
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="alert alert-success" role="alert">
+        <strong><?php echo $this->session->flashdata('success'); ?></strong>
+    </div>
+<?php endif; ?>
+
 <div class="logindiv">
 <?php echo form_open(base_url('register/do_register'), array('name' => 'regisForm', 'novalidate' => 'true', 'class' => 'regisformcss')); ?>
 
