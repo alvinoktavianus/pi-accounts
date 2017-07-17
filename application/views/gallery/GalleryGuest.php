@@ -1,1 +1,1 @@
-<?php echo $message; ?>
+<?php var_dump($galleries) ?>

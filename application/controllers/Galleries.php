@@ -27,7 +27,7 @@ class Galleries extends CI_Controller {
                 break;
             default:
                 $viewData = array(
-                    'message' => 'Hello guest galleries'
+                    'galleries' => $this->gallery->get_all_active_galleris_with_limit()
                 );
                 break;
         }
