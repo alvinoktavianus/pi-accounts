@@ -22,7 +22,7 @@ class Galleries extends CI_Controller {
                 break;
             case 'user':
                 $viewData = array(
-                    'message' => 'Hello user galleries'
+                    'galleries' => $this->gallery->get_all_active_galleries()
                 );
                 break;
             default:

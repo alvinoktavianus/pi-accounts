@@ -53,6 +53,7 @@
                             <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
                             <li class="<?php if ($pageKey == 'employee') echo "active"; ?>"><a href="<?php echo base_url('employees'); ?>">Employees</a></li>
                         <?php elseif ($this->session->userdata('user_session')['role'] == 'user'): ?>
+                            <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
                         <?php endif; ?>
                     <?php elseif (!$this->session->userdata('user_session')): ?>
                         <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url("galleries") ?>">Galleries</a></li>
