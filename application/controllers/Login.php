@@ -39,7 +39,8 @@ class Login extends CI_Controller {
                 } else if (password_verify($password, $resultUser[0]->password) && !password_verify($resultUser[0]->role, $this->input->server('ROOT_ROLE'))) {
                     $data = array(
                         'role' => $resultUser[0]->role,
-                        'userId' => $resultUser[0]->id
+                        'userId' => $resultUser[0]->id,
+                        'first_name' => $resultUser[0]->first_name
                     );
                     $this->session->set_userdata('user_session', $data);
                     redirect('home','refresh');

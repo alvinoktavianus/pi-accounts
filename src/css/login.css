@@ -133,7 +133,7 @@ div.logindiv input:focus ~ .highlight {
 
 /* Button */
 
-div.logindiv .button {
+div.logindiv .button, .buttonSubmit {
   position: relative;
   display: inline-block;
   padding: 12px 24px;
@@ -153,24 +153,24 @@ div.logindiv .button {
   -webkit-transition:all 0.15s ease;
   transition: all 0.15s ease;
 }
-div.logindiv .button:focus { outline: 0; }
+div.logindiv .button:focus, .buttonSubmit:focus { outline: 0; }
 
 
 /* Button modifiers */
 
-div.logindiv .buttonBlue {
+div.logindiv .buttonBlue, .buttonBlue {
   background: #4a89dc;
   text-shadow: 1px 1px 0 rgba(39, 110, 204, .5);
 }
 
-div.logindiv .buttonGreen {
+div.logindiv .buttonGreen, .buttonGreen {
   background: #2DE409;
   text-shadow: 1px 1px 0 rgba(33, 185, 3, .5);
   border-bottom: 2px solid #20C300;
 }
 
-div.logindiv .buttonBlue:hover { background: #357bd8; }
-div.logindiv .buttonGreen:hover { background: #25DC00; }
+div.logindiv .buttonBlue:hover, .buttonBlue:hover { background: #357bd8; }
+div.logindiv .buttonGreen:hover, .buttonGreen:hover { background: #25DC00; }
 
 /* Ripples container */
 
