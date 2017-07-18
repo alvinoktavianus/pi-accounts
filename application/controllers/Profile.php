@@ -11,7 +11,7 @@ class Profile extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('user_session') && $this->session->userdata('user_session')['role'] == 'admin') {
+		if ($this->session->userdata('user_session')) {
             $users = $this->user->find_by_id($this->session->userdata('user_session')['userId']);
             $viewData = array(
                 'users' => $users
