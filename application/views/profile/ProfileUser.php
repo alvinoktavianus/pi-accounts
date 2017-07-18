@@ -20,8 +20,7 @@
                 <?php foreach ($users as $index => $user): ?>
                     <tr><td>Email</td><td><?php echo $user->email; ?></td></tr>
                     <tr><td>Full Name</td><td><?php echo $user->first_name . ' ' . $user->last_name; ?></td></tr>
-                    <tr><td>Alamat</td><td>
-                    <?php if (empty($user->alamat)) {echo "-";} else { echo $user->alamat;} ?></td></tr>
+                    <tr><td>Alamat</td><td class="alamat-td"><?php if (empty($user->alamat)) {echo "-";} else { echo $user->alamat;} ?></td></tr>
                 <?php endforeach; ?>
             </tbody>
         </table>

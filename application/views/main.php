@@ -60,7 +60,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <?php if ($this->session->userdata('user_session')): ?>
-                        <li class="<?php if ($pageKey == 'profile') echo "active"; ?>"><a href="<?php echo base_url('profile'); ?>">Profile</a></li>
+                        <li class="<?php if ($pageKey == 'profile') echo "active"; ?>"><a href="<?php echo base_url('profile'); ?>"><?php echo $this->session->userdata('user_session')['first_name']; ?></a></li>
                         <li><a href="<?php echo base_url("logout") ?>">Logout</a></li>
                     <?php elseif (!$this->session->userdata('user_session')): ?>
                         <li class="<?php if ($pageKey == 'register') echo "active"; ?>"><a href="<?php echo base_url("register") ?>">Register</a></li>
