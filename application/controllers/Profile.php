@@ -40,7 +40,7 @@ class Profile extends CI_Controller {
                 $data = array(
                     'alamat' => $alamat
                 );
-                $this->user->insert_new_alamat($data);
+                $this->user->insert_new_alamat($data, $this->session->userdata('user_session')['userId']);
                 $this->session->set_flashdata('success', "Successfully insert new address");
                 redirect('profile','refresh');
             }

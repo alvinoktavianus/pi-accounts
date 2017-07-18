@@ -24,10 +24,12 @@ class User extends CI_Model {
         $this->db->insert('users', $data);
     }
 
-    public function insert_new_alamat($data)
+    public function insert_new_alamat($data, $id)
     {
-        // update alamat where id=session id
-        // $this->db->insert('users', $data);
+        $this->db->trans_start();
+        $this->db->where('id', $id);
+        $this->db->update('users', $data);
+        $this->db->trans_complete();
     }
 
 
