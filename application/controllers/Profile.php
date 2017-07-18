@@ -27,10 +27,10 @@ class Profile extends CI_Controller {
         }
 	}
 
-    public function add_alamat()
+    public function add_address()
     {
         if ($this->session->userdata('user_session')) {
-            $this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[5]');
+            $this->form_validation->set_rules('alamat', 'Address', 'required|min_length[5]');
             if (!$this->form_validation->run()) {
                 $errors = validation_errors();
                 $this->session->set_flashdata('errors', $errors);
@@ -38,7 +38,7 @@ class Profile extends CI_Controller {
             } else {
                 $alamat = $this->input->post('alamat');
                 $data = array(
-                    'alamat' => $alamat
+                    'address' => $alamat
                 );
                 $this->user->insert_new_alamat($data, $this->session->userdata('user_session')['userId']);
                 $this->session->set_flashdata('success', "Successfully insert new address");
