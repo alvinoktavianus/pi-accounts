@@ -22,12 +22,12 @@ class Galleries extends CI_Controller {
                 break;
             case 'user':
                 $viewData = array(
-                    'message' => 'Hello user galleries'
+                    'galleries' => $this->gallery->get_all_active_galleries()
                 );
                 break;
             default:
                 $viewData = array(
-                    'message' => 'Hello guest galleries'
+                    'galleries' => $this->gallery->get_all_active_galleris_with_limit()
                 );
                 break;
         }
@@ -58,7 +58,7 @@ class Galleries extends CI_Controller {
                 $this->session->set_flashdata('errors', $errors);
             } else {
                 $dataImages = null;
-                if ($_FILES['image']['name'] != "") {
+                if (strlen($_FILES['image']['name']) > 0) {
                     $config['upload_path'] = './uploads/galleries/';
                     $config['allowed_types'] = 'gif|jpg|png';
                     $config['encrypt_name'] = true;
@@ -68,28 +68,31 @@ class Galleries extends CI_Controller {
                     } else {
                         $this->session->set_flashdata('errors', $this->upload->display_errors());
                     }
+                    $this->db->trans_start();
+                    $dataInserted = array(
+                        'name' => $this->input->post('name'),
+                        'base_price' => $baseprice,
+                        'sell_price' => $sellprice,
+                        'category_id' => $this->input->post('categories'),
+                        'created_by' => $this->session->userdata('user_session')['userId'],
+                        'updated_by' => $this->session->userdata('user_session')['userId'],
+                    );
+                    $this->gallery->insert_new_gallery($dataInserted);
+                    $latestGalleryId = $this->gallery->get_latest_galleries()->id;
+                    $dataimages = array(
+                        'file_name' => $dataImages['file_name'],
+                        'gallery_id' => $latestGalleryId,
+                        'is_primary' => 1,
+                        'created_by' => $this->session->userdata('user_session')['userId'],
+                        'updated_by' => $this->session->userdata('user_session')['userId'],
+                    );
+                    $this->image->insert_new_image($dataimages);
+                    $this->db->trans_complete();
+                    $this->session->set_flashdata('success', "Successfully insert new gallery image");
+                } else {
+                    $errors = "Please upload image";
+                    $this->session->set_flashdata('errors', $errors);
                 }
-                $this->db->trans_start();
-                $dataInserted = array(
-                    'name' => $this->input->post('name'),
-                    'base_price' => $baseprice,
-                    'sell_price' => $sellprice,
-                    'category_id' => $this->input->post('categories'),
-                    'created_by' => $this->session->userdata('user_session')['userId'],
-                    'updated_by' => $this->session->userdata('user_session')['userId'],
-                );
-                $this->gallery->insert_new_gallery($dataInserted);
-                $latestGalleryId = $this->gallery->get_latest_galleries()->id;
-                $dataimages = array(
-                    'file_name' => $dataImages['file_name'],
-                    'gallery_id' => $latestGalleryId,
-                    'is_primary' => 1,
-                    'created_by' => $this->session->userdata('user_session')['userId'],
-                    'updated_by' => $this->session->userdata('user_session')['userId'],
-                );
-                $this->image->insert_new_image($dataimages);
-                $this->db->trans_complete();
-                $this->session->set_flashdata('success', "Successfully insert new gallery image");
             }
             redirect('galleries','refresh');
         } else {
