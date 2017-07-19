@@ -30,6 +30,19 @@ class Category extends CI_Model {
         return $result;
     }
 
+    public function create_category_dropdown_with_placeholder()
+    {
+        $this->db->trans_start();
+        $categories = $this->db->get_where('categories', array('is_active' => 1, 'is_deleted' => 0))->result();
+        $this->db->trans_complete();
+        $result = [];
+        $result[''] = '';
+        foreach ($categories as $category) {
+            $result[$category->id] = $category->name;
+        }
+        return $result;
+    }
+
 }
 
 /* End of file Category.php */
