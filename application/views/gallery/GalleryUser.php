@@ -6,10 +6,10 @@ if ($this->session->userdata('user_session') && $this->session->userdata('user_s
     <form action="<?php echo base_url('galleries') ?>" method="get" name="galleryForm">
         <div class="form-group">
             <label class="control-label">Search by category</label>
-            <?php echo form_dropdown('category', $categories, $selectedCategory, array('class' => 'form-control', 'ng-required' => "true", "name" => "category", 'ng-model' => 'gallery.categoryId')); ?>
+            <?php echo form_dropdown('category', $categories, $selectedCategory, array('class' => 'form-control', 'ng-required' => "true", "name" => "category")); ?>
         </div>
         <div class="form-group">
-            <input type="submit" value="Search" class="btn btn-primary" disabled="galleryForm.$invalid">
+            <input type="submit" value="Search" class="btn btn-primary">
         </div>
     </form>
 </div>

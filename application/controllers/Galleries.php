@@ -23,10 +23,10 @@ class Galleries extends CI_Controller {
             case 'user':
                 $category = $this->input->get('category');
                 $galleries = isset($category) ? $this->gallery->get_all_active_galleries_where($category) : $this->gallery->get_all_active_galleries();
-                $selectedCategory = isset($category) ? $this->input->get('category') : 0;
+                $selectedCategory = isset($category) ? $this->input->get('category') : '';
                 $viewData = array(
                     'galleries' => $galleries,
-                    'categories' => $this->category->create_category_dropdown(),
+                    'categories' => $this->category->create_category_dropdown_with_placeholder(),
                     'selectedCategory' => $selectedCategory
                 );
                 break;
