@@ -70,30 +70,30 @@ class Galleries extends CI_Controller {
                     $this->upload->initialize($config);
                     if ($this->upload->do_upload('image')) {
                         $dataImages = $this->upload->data();
+                        $this->db->trans_start();
+                        $dataInserted = array(
+                            'name' => $this->input->post('name'),
+                            'base_price' => $baseprice,
+                            'sell_price' => $sellprice,
+                            'category_id' => $this->input->post('categories'),
+                            'created_by' => $this->session->userdata('user_session')['userId'],
+                            'updated_by' => $this->session->userdata('user_session')['userId'],
+                        );
+                        $this->gallery->insert_new_gallery($dataInserted);
+                        $latestGalleryId = $this->gallery->get_latest_galleries()->id;
+                        $dataimages = array(
+                            'file_name' => $dataImages['file_name'],
+                            'gallery_id' => $latestGalleryId,
+                            'is_primary' => 1,
+                            'created_by' => $this->session->userdata('user_session')['userId'],
+                            'updated_by' => $this->session->userdata('user_session')['userId'],
+                        );
+                        $this->image->insert_new_image($dataimages);
+                        $this->db->trans_complete();
+                        $this->session->set_flashdata('success', "Successfully insert new gallery image");
                     } else {
                         $this->session->set_flashdata('errors', $this->upload->display_errors());
                     }
-                    $this->db->trans_start();
-                    $dataInserted = array(
-                        'name' => $this->input->post('name'),
-                        'base_price' => $baseprice,
-                        'sell_price' => $sellprice,
-                        'category_id' => $this->input->post('categories'),
-                        'created_by' => $this->session->userdata('user_session')['userId'],
-                        'updated_by' => $this->session->userdata('user_session')['userId'],
-                    );
-                    $this->gallery->insert_new_gallery($dataInserted);
-                    $latestGalleryId = $this->gallery->get_latest_galleries()->id;
-                    $dataimages = array(
-                        'file_name' => $dataImages['file_name'],
-                        'gallery_id' => $latestGalleryId,
-                        'is_primary' => 1,
-                        'created_by' => $this->session->userdata('user_session')['userId'],
-                        'updated_by' => $this->session->userdata('user_session')['userId'],
-                    );
-                    $this->image->insert_new_image($dataimages);
-                    $this->db->trans_complete();
-                    $this->session->set_flashdata('success', "Successfully insert new gallery image");
                 } else {
                     $errors = "Please upload image";
                     $this->session->set_flashdata('errors', $errors);
