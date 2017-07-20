@@ -9,11 +9,11 @@
         <strong><?php echo $this->session->flashdata('success'); ?></strong>
     </div>
 <?php endif; ?>
-
+<div class="divgaladmin">
 <?php echo form_open_multipart(base_url('galleries/do_add'), array('name' => 'galleryForm', 'novalidate' => 'true')); ?>
 
 <fieldset>
-    <legend>Gallery Data</legend>
+    <legend>Add Product to Gallery</legend>
 
     <div class="form-group" ng-class="{ 'has-error' : galleryForm.name.$invalid && !galleryForm.name.$pristine, 'has-success': galleryForm.name.$valid }">
         <?php echo form_label('Name', 'name', array('class' => 'sr-only')); ?>
@@ -37,11 +37,11 @@
         <?php echo form_label('Categories', 'categories', array('class' => 'sr-only')); ?>
         <?php echo form_dropdown('categories', $categories, '0', array('class' => 'form-control', 'ng-required' => "true", "name" => "categories", 'ng-model' => 'gallery.category')); ?>
         <span ng-show="!galleryForm.categories.$pristine && galleryForm.categories.$error.required" class="help-block" ng-cloak>Please enter valid base price</span>
-    </div>
+    </div><br>
 </fieldset>
 
 <fieldset>
-    <legend>Images</legend>
+    <legend>Upload Image</legend>
 
     <div class="form-group">
         <?php echo form_label('Image', 'image', array('class' => 'sr-only')); ?>
@@ -51,7 +51,10 @@
 </fieldset>
 
 <div class="form-group">
-    <button ng-disabled="galleryForm.$invalid" class="btn" ng-class="{'btn-success': galleryForm.$valid, 'btn-danger': galleryForm.$invalid}" ng-cloack>Add</button>
+    <br>
+    <button ng-disabled="galleryForm.$invalid" class="btn btn-lg" ng-class="{'btn-success': galleryForm.$valid, 'btn-danger': galleryForm.$invalid}" ng-cloack>Add Product</button>
 </div>
 
 <?php echo form_close(); ?>
+    
+</div>
