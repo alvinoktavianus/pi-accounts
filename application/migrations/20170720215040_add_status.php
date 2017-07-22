@@ -18,6 +18,10 @@ class Migration_Add_status extends CI_Migration {
                     'unsigned' => true,
                     'auto_increment' => true
                 ),
+                'name' => array(
+                    'type' => 'VARCHAR',
+                    'constraint' => '50',
+                ),
                 'description' => array(
                     'type' => 'TEXT'
                 )
