@@ -25,7 +25,7 @@
     <title><?php echo $title; ?></title>
     <?php
         if ($this->input->server('CI_ENV') == 'development') {
-            echo link_tag(base_url('assets/css/vendor.css')) . link_tag(base_url('assets/css/application.css'));
+            echo link_tag(base_url('assets/css/vendor-less.css')) . link_tag(base_url('assets/css/vendor-css.css')) . link_tag(base_url('assets/css/application.css'));
         } else if ($this->input->server('CI_ENV') == 'production') {
             echo link_tag(base_url('assets/css/vendor.min.css')) . link_tag(base_url('assets/css/application.min.css'));
         }
@@ -104,7 +104,7 @@
                                 $this->load->view('gallery/GalleryAdmin', $viewData);
                                 break;
                             case 'transaction':
-                                $this->load->view('transaction/TransactionAdmin');
+                                $this->load->view('transaction/TransactionAdmin', $viewData);
                                 break;
                             case 'profile':
                                 $this->load->view('profile/ProfileUser', $viewData);
@@ -133,13 +133,15 @@
     <?php if ($this->input->server('CI_ENV') == 'development') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', ['dynamicNumber'])
+            var app = angular.module('piAccounts', ['dynamicNumber', 'ui.select', 'ngSanitize']);
+            var baseUrl = '<?php echo $this->input->server('HOST_URL'); ?>';
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.js"); ?>"></script>
     <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.min.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', ['dynamicNumber', 'ui.select', 'ngSanitize'])
+            var app = angular.module('piAccounts', ['dynamicNumber', 'ui.select', 'ngSanitize']);
+            var baseUrl = '<?php echo $this->input->server('HOST_URL'); ?>';
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.min.js"); ?>"></script>
     <?php endif; ?>

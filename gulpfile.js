@@ -21,10 +21,16 @@ gulp.task("concatApplicationScripts", function () {
         .pipe(gulp.dest("assets/js"));
 });
 
+gulp.task("compileVendorStyleCss", function () {
+    gulp.src(mainBowerFiles({ filter: '**/*.css' }))
+        .pipe(concat("vendor-css.css"))
+        .pipe(gulp.dest("assets/css"));
+});
+
 gulp.task("compileVendorStyles", function () {
     gulp.src(mainBowerFiles({ filter: '**/*.less' }))
         .pipe(less())
-        .pipe(concat("vendor.css"))
+        .pipe(concat("vendor-less.css"))
         .pipe(gulp.dest("assets/css"));
 });
 
@@ -73,6 +79,6 @@ gulp.task('copyFonts', function() {
 // Single task
 gulp.task("createDevScripts", ['concatVendorScripts', 'concatApplicationScripts']);
 gulp.task("createProdScripts", ['createDevScripts', 'minifyVendorScripts', 'minifyApplicationScripts']);
-gulp.task("createDevStyles", ['compileVendorStyles', 'compileApplicationStyles', 'copyFonts']);
+gulp.task("createDevStyles", ['compileVendorStyles', 'compileVendorStyleCss', 'compileApplicationStyles', 'copyFonts']);
 gulp.task("createProdStyles", ['createDevStyles', 'minifyVendorStyles', 'minifyApplicationStyles']);
 gulp.task("test", ['createDevScripts', 'createDevStyles'])
