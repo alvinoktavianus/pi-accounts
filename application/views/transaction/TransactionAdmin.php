@@ -1,5 +1,5 @@
 <div ng-controller="TransactionCtrl">
-    <form name="transForm" novalidate="true" ng-submit="submitForm()">
+    <form name="transForm" novalidate="true" ng-submit="submitForm()" id="transformadmin">
 
         <div class="form-group">
           <ui-select ng-model="transaction.selected" theme="bootstrap">
@@ -23,15 +23,15 @@
         </div>
 
         
-        <div class="table-responsive">
-            <table class="table table-bordered">
+        <div>
+            <table class="table-responsive table">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>Item Name</th>
                         <th>Qty</th>
                         <th>Price</th>
-                        <th></th>
+                        <th style="border-style:none;"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +46,7 @@
                         <td>
                             <input type="number" ng-model="item.price" class="form-control" ng-change="calcTotalPrice()">
                         </td>
-                        <td>
+                        <td style="width: 80px;">
                             <button ng-click="addItem(item)" class="btn btn-success" type="button">Add Item</button>
                             <button ng-click="removeItem(item)" ng-show="$index > 0" class="btn btn-danger" type="button">Delete</button>
                         </td>
@@ -59,6 +59,9 @@
                     <tr>
                         <td colspan="3">Total Price</td>
                         <td><strong>{{transaction.total_price | number: 0}}</strong></td>
+                        <td colspan="2"><button ng-click="addItem(item)" class="btn btn-success">Add Item</button></td>
+                        <td style="text-align: right;vertical-align: middle;"><strong>TOTAL</strong></td>
+                        <td style="vertical-align: middle"><strong>{{transaction.total_price | number: 0}}</strong></td>
                         <td></td>
                     </tr>
                 </tbody>
