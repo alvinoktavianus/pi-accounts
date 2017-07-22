@@ -52,6 +52,11 @@
                         </td>
                     </tr>
                     <tr>
+                        <td colspan="3">Shipping Fee</td>
+                        <td><input type="number" ng-model="transaction.shipping_fee" class="form-control" ng-change="calcTotalPrice()" min="0"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
                         <td colspan="3">Total Price</td>
                         <td><strong>{{transaction.total_price | number: 0}}</strong></td>
                         <td></td>

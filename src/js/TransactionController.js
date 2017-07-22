@@ -4,6 +4,7 @@ app.controller('TransactionCtrl', ['$scope', '$http', '$q', function($scope, $ht
     $scope.transaction = {};
     $scope.transaction.items = [{}];
     $scope.transaction.total_price = 0;
+    $scope.transaction.shipping_fee = 0;
 
     function init() {
         // get all users
@@ -26,6 +27,7 @@ app.controller('TransactionCtrl', ['$scope', '$http', '$q', function($scope, $ht
     $scope.calcTotalPrice = function() {
         $scope.transaction.total_price = 0;
         angular.forEach($scope.transaction.items, function(item) { $scope.transaction.total_price += !isNaN(item.qty * item.price) ? (item.qty * item.price) : 0; });
+        $scope.transaction.total_price += $scope.transaction.shipping_fee;
     };
 
     $scope.submitForm = function() {
