@@ -19,7 +19,7 @@
     "angular": "^1.6.5",
     "angular-dynamic-number": "^2.5.0",
     "angular-ui-select": "^0.19.8",
-    "angular-sanitize": "^1.6.5",
+    "angular-sanitize": "^1.6.5"
   },
   "resolutions": {
     "angular": "^1.6.5"
