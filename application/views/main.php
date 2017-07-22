@@ -51,7 +51,7 @@
                         <?php if ($this->session->userdata('user_session')['role'] == 'admin'): ?>
                             <li class="<?php if ($pageKey == 'category') echo "active"; ?>"><a href="<?php echo base_url('categories'); ?>">Categories</a></li>
                             <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
-                            <li class="<?php if ($pageKey == 'transaction') echo "active"; ?>"><a href="<?php echo base_url('transaction'); ?>">Transaction</a></li>
+                            <li class="<?php if ($pageKey == 'transaction') echo "active"; ?>"><a href="<?php echo base_url('transactions'); ?>">Transaction</a></li>
                         <?php elseif ($this->session->userdata('user_session')['role'] == 'user'): ?>
                             <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
                         <?php endif; ?>
@@ -135,7 +135,7 @@
         <script type="text/javascript">
             var app = angular.module('piAccounts', ['dynamicNumber', 'ui.select', 'ngSanitize']);
             var baseUrl = '<?php echo $this->input->server('HOST_URL'); ?>';
-        </script>  
+        </script>
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.js"); ?>"></script>
     <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.min.js"); ?>"></script>
