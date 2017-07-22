@@ -1,9 +1,8 @@
 <div ng-controller="TransactionCtrl">
     <form name="transForm" novalidate="true" ng-submit="submitForm()" id="transformadmin">
-
         <div class="form-group">
           <ui-select ng-model="transaction.selected" theme="bootstrap">
-            <ui-select-match placeholder="Select or search a person in the list...">{{$select.selected.email}}</ui-select-match>
+            <ui-select-match placeholder="Select or search with email...">{{$select.selected.email}}</ui-select-match>
             <ui-select-choices repeat="item in users | filter: $select.search">
               <div ng-bind-html="item.email | highlight: $select.search"></div>
               <small ng-bind-html="item.first_name | highlight: $select.search"></small>
@@ -13,30 +12,30 @@
         </div>
 
         <div class="form-group">
-            <label class="sr-only">Full Name</label>
-            <input type="text" readonly="true" class="form-control" value="{{transaction.selected.first_name + ' ' + transaction.selected.last_name}}" placeholder="Full Name">
+            <label>Full Name</label>
+            <input type="text" readonly class="form-control" value="{{transaction.selected.first_name + ' ' + transaction.selected.last_name}}" placeholder="Full Name">
         </div>
 
         <div class="form-group">
-            <label class="sr-only">Address</label>
-            <textarea class="form-control" style="resize: vertical;" readonly="true">{{transaction.selected.address}}</textarea>
+            <label>Address</label>
+            <textarea class="form-control" style="resize: vertical;height: 120px;" readonly>{{transaction.selected.address}}</textarea>
         </div>
 
         
         <div>
-            <table class="table-responsive table">
+            <table class="table-responsive table transadmtbl">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Item Name</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                        <th style="border-style:none;"></th>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Product Name</th>
+                        <th class="qtytransadm">Qty</th>
+                        <th class="text-center pricetransadm">Price</th>
+                        <th style="border: 0"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in transaction.items track by $index">
-                        <td>{{$index+1}}</td>
+                        <td class="text-center">{{$index+1}}</td>
                         <td>
                             <input type="text" ng-model="item.name" class="form-control">
                         </td>
@@ -46,23 +45,19 @@
                         <td>
                             <input type="number" ng-model="item.price" class="form-control" ng-change="calcTotalPrice()">
                         </td>
-                        <td style="width: 80px;">
-                            <button ng-click="addItem(item)" class="btn btn-success" type="button">Add Item</button>
-                            <button ng-click="removeItem(item)" ng-show="$index > 0" class="btn btn-danger" type="button">Delete</button>
+                        <td style="width: 80px;border: 0">
+                            <button type="button" ng-click="removeItem(item)" ng-show="$index > 0" class="btn btn-danger" ng-cloak>Delete</button>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3">Shipping Fee</td>
-                        <td><input type="number" ng-model="transaction.shipping_fee" class="form-control" ng-change="calcTotalPrice()" min="0"></td>
                         <td></td>
+                        <td class="text-center"><button ng-click="addItem(item)" class="btn btn-success">Add Item</button></td>
+                        <td style="text-align: right;vertical-align: middle;"><strong>SHIPPING FEE</strong></td>
+                        <td><input type="number" ng-model="transaction.shipping_fee" class="form-control" ng-change="calcTotalPrice()" min="0"></td>
                     </tr>
                     <tr>
-                        <td colspan="3">Total Price</td>
-                        <td><strong>{{transaction.total_price | number: 0}}</strong></td>
-                        <td colspan="2"><button ng-click="addItem(item)" class="btn btn-success">Add Item</button></td>
-                        <td style="text-align: right;vertical-align: middle;"><strong>TOTAL</strong></td>
-                        <td style="vertical-align: middle"><strong>{{transaction.total_price | number: 0}}</strong></td>
-                        <td></td>
+                        <td colspan="3" style="text-align: right;vertical-align: middle;"><strong>GRAND TOTAL</strong></td>
+                        <td><input type="text" class="form-control" readonly value="{{transaction.total_price | number: 0}}"></td>
                     </tr>
                 </tbody>
             </table>

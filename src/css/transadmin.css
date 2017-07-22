@@ -1,3 +1,17 @@
 #transformadmin {
-	max-width: 700px;
+	max-width: 850px;
+}
+
+.transadmtbl {
+	border: 0 !important;
+}
+
+@media screen and (min-device-width: 750px) {
+	.pricetransadm {
+		width: 160px;
+	}
+
+	.qtytransadm {
+		width: 120px;
+	}
 }
