@@ -6,9 +6,14 @@ class Transaction extends CI_Controller {
 	public function index()
 	{
 		if ($this->session->userdata('user_session') && $this->session->userdata('user_session')['role'] == 'admin') {
+            $s = substr(str_shuffle(str_repeat("04BGHCFSQ1UAEVYDNR5OILPZ673928WTJKXM", 3)), 0, 3);
+            $varnota = strtoupper(date('ymNBs')) . $s;
             $data = array(
                 'pageKey' => 'transaction',
-                'title' => 'Transaction | Pro Importir'
+                'title' => 'Transaction | Pro Importir',
+                'viewData' => array(
+                    'varnota' => 'INVC/'.$varnota,
+                )
             );
             $this->load->view('main', $data);
         } else {
