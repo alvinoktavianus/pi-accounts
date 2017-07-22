@@ -47,8 +47,8 @@
                             <input type="number" ng-model="item.price" class="form-control" ng-change="calcTotalPrice()">
                         </td>
                         <td>
-                            <button ng-click="addItem(item)" class="btn btn-success">Add Item</button>
-                            <button ng-click="removeItem(item)" ng-show="$index > 0" class="btn btn-danger">Delete</button>
+                            <button ng-click="addItem(item)" class="btn btn-success" type="button">Add Item</button>
+                            <button ng-click="removeItem(item)" ng-show="$index > 0" class="btn btn-danger" type="button">Delete</button>
                         </td>
                     </tr>
                     <tr>

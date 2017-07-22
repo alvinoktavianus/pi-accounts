@@ -31,7 +31,16 @@ app.controller('TransactionCtrl', ['$scope', '$http', '$q', function($scope, $ht
     };
 
     $scope.submitForm = function() {
-        console.log("form submitted");
+        var data = {
+            user_id: $scope.transaction.selected.id,
+            total_price: $scope.transaction.total_price,
+            shipping_fee: $scope.transaction.shipping_fee,
+            total: $scope.transaction.total_price,
+            items: $scope.transaction.items
+        }
+        $http.post(baseUrl+'/transactions/insert_new_transaction', data, {}).then(function(response) {
+            console.log(response);
+        });
     };
 
     angular.element(document).ready(function () {
