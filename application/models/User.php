@@ -32,6 +32,13 @@ class User extends CI_Model {
         $this->db->trans_complete();
     }
 
+    public function get_all_users()
+    {
+        $this->db->trans_start();
+        $user = $this->db->get_where('users', array('role' => 'user'))->result();
+        $this->db->trans_complete();
+        return $user;
+    }
 
 }
 

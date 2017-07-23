@@ -25,7 +25,7 @@
     <title><?php echo $title; ?></title>
     <?php
         if ($this->input->server('CI_ENV') == 'development') {
-            echo link_tag(base_url('assets/css/vendor.css')) . link_tag(base_url('assets/css/application.css'));
+            echo link_tag(base_url('assets/css/vendor-less.css')) . link_tag(base_url('assets/css/vendor-css.css')) . link_tag(base_url('assets/css/application.css'));
         } else if ($this->input->server('CI_ENV') == 'production') {
             echo link_tag(base_url('assets/css/vendor.min.css')) . link_tag(base_url('assets/css/application.min.css'));
         }
@@ -51,7 +51,7 @@
                         <?php if ($this->session->userdata('user_session')['role'] == 'admin'): ?>
                             <li class="<?php if ($pageKey == 'category') echo "active"; ?>"><a href="<?php echo base_url('categories'); ?>">Categories</a></li>
                             <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
-                            <li class="<?php if ($pageKey == 'employee') echo "active"; ?>"><a href="<?php echo base_url('employees'); ?>">Employees</a></li>
+                            <li class="<?php if ($pageKey == 'transaction') echo "active"; ?>"><a href="<?php echo base_url('transactions'); ?>">Transaction</a></li>
                         <?php elseif ($this->session->userdata('user_session')['role'] == 'user'): ?>
                             <li class="<?php if ($pageKey == 'gallery') echo "active"; ?>"><a href="<?php echo base_url('galleries'); ?>">Galleries</a></li>
                         <?php endif; ?>
@@ -103,8 +103,8 @@
                             case 'gallery':
                                 $this->load->view('gallery/GalleryAdmin', $viewData);
                                 break;
-                            case 'employee':
-                                $this->load->view('home/EmployeeAdmin');
+                            case 'transaction':
+                                $this->load->view('transaction/TransactionAdmin', $viewData);
                                 break;
                             case 'profile':
                                 $this->load->view('profile/ProfileUser', $viewData);
@@ -133,13 +133,15 @@
     <?php if ($this->input->server('CI_ENV') == 'development') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', ['dynamicNumber'])
-        </script>  
+            var app = angular.module('piAccounts', ['dynamicNumber', 'ui.select', 'ngSanitize']);
+            var baseUrl = '<?php echo $this->input->server('HOST_URL'); ?>';
+        </script>
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.js"); ?>"></script>
     <?php elseif ($this->input->server('CI_ENV') == 'production') : ?>
         <script type="text/javascript" src="<?php echo base_url("assets/js/vendor.min.js"); ?>"></script>
         <script type="text/javascript">
-            var app = angular.module('piAccounts', ['dynamicNumber'])
+            var app = angular.module('piAccounts', ['dynamicNumber', 'ui.select', 'ngSanitize']);
+            var baseUrl = '<?php echo $this->input->server('HOST_URL'); ?>';
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.min.js"); ?>"></script>
     <?php endif; ?>
