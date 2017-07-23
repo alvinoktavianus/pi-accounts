@@ -7,7 +7,7 @@ class Transactions extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('transaction');
-        $this->load->model('transactiondetail');
+        $this->load->model('transaction_detail');
     }
 
 	public function index()
@@ -51,7 +51,7 @@ class Transactions extends CI_Controller {
                     'created_by' => $this->session->userdata('user_session')['userId'],
                     'updated_by' => $this->session->userdata('user_session')['userId'],
                 );
-                $this->transactiondetail->insert_transaction_detail($transDetail);
+                $this->transaction_detail->insert_transaction_detail($transDetail);
             }
             $this->db->trans_complete();
             $this->output->set_status_header(201);

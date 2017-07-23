@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class TransactionDetail extends CI_Model {
+class Transaction_detail extends CI_Model {
 
     public function insert_transaction_detail($data)
     {
@@ -10,5 +10,5 @@ class TransactionDetail extends CI_Model {
 
 }
 
-/* End of file TransactionDetail.php */
-/* Location: ./application/models/TransactionDetail.php */
+/* End of file Transaction_detail.php */
+/* Location: ./application/models/Transaction_detail.php */
