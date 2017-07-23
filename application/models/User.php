@@ -40,6 +40,12 @@ class User extends CI_Model {
         return $user;
     }
 
+    public function get_all()
+    {
+        $this->db->not_like('role', 'su');
+        return $this->db->get('users')->result();
+    }
+
 }
 
 /* End of file User.php */
