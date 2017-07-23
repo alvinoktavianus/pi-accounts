@@ -1,8 +1,8 @@
 <div ng-controller="TransactionCtrl">
     <form name="transForm" novalidate="true" ng-submit="submitForm()" id="transformadmin">
         <div class="form-group">
-          <ui-select ng-model="transaction.selected" theme="bootstrap">
-            <ui-select-match placeholder="Select or search with email...">{{$select.selected.email}}</ui-select-match>
+          <ui-select ng-model="transaction.selected" theme="bootstrap" ng-disabled="!isSelectable">
+            <ui-select-match placeholder="{{uiSelectPlaceholder}}">{{$select.selected.email}}</ui-select-match>
             <ui-select-choices repeat="item in users | filter: $select.search">
               <div ng-bind-html="item.email | highlight: $select.search"></div>
               <small ng-bind-html="item.first_name | highlight: $select.search"></small>
