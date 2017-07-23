@@ -51,7 +51,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td class="text-center"><button ng-click="addItem(item)" class="btn btn-success">Add Item</button></td>
+                        <td class="text-center"><button ng-click="addItem(item)" class="btn btn-success" type="button">Add Item</button></td>
                         <td style="text-align: right;vertical-align: middle;"><strong>SHIPPING FEE</strong></td>
                         <td><input type="number" ng-model="transaction.shipping_fee" class="form-control" ng-change="calcTotalPrice()" min="0"></td>
                     </tr>
