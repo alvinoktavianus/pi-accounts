@@ -1,69 +1,61 @@
-<?php if ($this->session->flashdata('errors')): ?>
-    <div class="alert alert-danger" role="alert">
-        <strong><?php echo $this->session->flashdata('errors'); ?></strong>
+<div ng-controller="CategoriesAdminCtrl">
+
+    <div class="alert alert-success" ng-show="responses.showNotif" ng-cloak>
+        <strong>Successfully insert new category</strong>
+    </div>
+
+    <div ng-if="isLoading"><h3>Loading...</h3></div>
+
+    <div class="row" ng-if="!isLoading" ng-cloak>
+        <div class="col-xs-12">
+            <h2 class="text-center">Add new category</h2>
+        </div>
+
+        <div class="col-xs-12 col-md-6">
+            <form name="categoryForm" novalidate="true" ng-submit="addNewCategory(categoryForm)">
+                <div class="form-group" ng-class="{ 'has-error' : categoryForm.categoryName.$invalid && !categoryForm.categoryName.$pristine, 'has-success': categoryForm.categoryName.$valid }">
+                    <label class="sr-only">Category Name</label>
+                    <input type="text" name="categoryName" class="form-control" ng-required="true" ng-maxlength="20" placeholder="Category Name" ng-model="category.name">
+                    <span ng-show="!categoryForm.categoryName.$pristine && categoryForm.categoryName.$error.required" class="help-block" ng-cloak>Please enter category</span>
+                    <span ng-show="!categoryForm.categoryName.$pristine && categoryForm.categoryName.$error.minlength" class="help-block" ng-cloak>Minimum character is 5</span>
+                    <span ng-show="!categoryForm.categoryName.$pristine && categoryForm.categoryName.$error.maxlength" class="help-block" ng-cloak>Maximum character is 20</span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Add" ng-disabled="categoryForm.$invalid" class="btn" ng-class="{'btn-success': categoryForm.$valid, 'btn-danger': categoryForm.$invalid}" ng-cloak />
+                </div>
+            </form>
+        </div>
+
+<?php if ($this->input->server('CI_ENV') == 'development'): ?>
+    <div class="col-xs-12" ng-cloak>
+        <pre><code>{{category | json}}</code></pre>
     </div>
 <?php endif; ?>
 
-<?php if ($this->session->flashdata('success')): ?>
-    <div class="alert alert-success" role="alert">
-        <strong><?php echo $this->session->flashdata('success'); ?></strong>
-    </div>
-<?php endif; ?>
+        <div class="col-xs-12">
+            <div ng-if="categories.length == 0" ng-cloak><h3>No data to display</h3></div>
 
-<div class="row">
-    <div class="col-xs-12">
-        <h2 class="text-center">Add new category</h2>
-    </div>
-
-    <div class="col-xs-12 col-md-6">
-        <?php echo form_open(base_url('categories/do_add'), array('name' => 'categoryForm', 'novalidate' => 'true')); ?>
-            <div class="form-group" ng-class="{ 'has-error' : categoryForm.categoryName.$invalid && !categoryForm.categoryName.$pristine, 'has-success': categoryForm.categoryName.$valid }">
-                <?php echo form_label('Category Name', 'categoryName', array('class' => 'sr-only')); ?>
-                <?php echo form_input(array('type' => 'text', 'class' => 'form-control', 'id' => 'categoryName', 'name' => 'categoryName', 'ng-required' => true, 'ng-model' => 'category.categoryName', 'placeholder' => 'Category Name', 'ng-maxlength' => '20', 'ng-minlength' => '5')); ?>
-                <span ng-show="!categoryForm.categoryName.$pristine && categoryForm.categoryName.$error.required" class="help-block" ng-cloak>Please enter category</span>
-                <span ng-show="!categoryForm.categoryName.$pristine && categoryForm.categoryName.$error.minlength" class="help-block" ng-cloak>Minimum character is 5</span>
-                <span ng-show="!categoryForm.categoryName.$pristine && categoryForm.categoryName.$error.maxlength" class="help-block" ng-cloak>Maximum character is 20</span>
+            <div ng-if="categories.length > 0" ng-cloak>
+                <table class="table table-bordered table-striped table-sm">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Category Name</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="category in categories track by $index">
+                            <td>{{$index+1}}</td>
+                            <td>{{category.name}}</td>
+                            <td><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-            <div class="form-group">
-                <button ng-disabled="categoryForm.$invalid" class="btn" ng-class="{'btn-success': categoryForm.$valid, 'btn-danger': categoryForm.$invalid}">Add</button>
-            </div>
-        <?php echo form_close(); ?>        
     </div>
+
 </div>
-
-
-<?php if (empty($categories)): ?>
-    <h4>No categories</h4>
-<?php else: ?>
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-sm">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Category Name</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($categories as $index => $category): ?>
-                    <tr>
-                        <td><?php echo $index+1; ?></td>
-                        <td><?php echo $category->name; ?></td>
-                        <td>
-                            <?php if ($category->is_active == 1): ?>
-
-                            <?php elseif ($category->is_active == 0): ?>
-
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-<?php endif; ?>
