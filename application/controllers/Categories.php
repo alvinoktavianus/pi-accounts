@@ -12,14 +12,9 @@ class Categories extends CI_Controller {
     public function index()
     {
         if ($this->session->userdata('user_session') && $this->session->userdata('user_session')['role'] == 'admin') {
-            $categories = $this->category->find_all_if_active();
-            $viewData = array(
-                'categories' => $categories
-            );
             $data = array(
                 'pageKey' => 'category',
                 'title' => 'Categories | Pro Importir',
-                'viewData' => $viewData
             );
             $this->load->view('main', $data);
         } else {
@@ -48,13 +43,36 @@ class Categories extends CI_Controller {
             $obj = json_decode(file_get_contents('php://input'), TRUE);
             $data = array(
                 'name' => $obj['name'],
-                'created_by' => $this->session->userdata('user_session')['userId']
+                'created_by' => $this->session->userdata('user_session')['userId'],
+                'updated_by' => $this->session->userdata('user_session')['userId']
             );
             $this->category->insert_new_data($data);
             $this->db->trans_complete();
 
             $categories = $this->category->find_all_if_active();
-            $this->output->set_status_header(201)->set_content_type('application/json')->set_output(json_encode($categories));
+            $this->output->set_status_header(201)->set_content_type('application/json')->set_output(json_encode($categories, JSON_NUMERIC_CHECK));
+        } else {
+            $error = array(
+                'code' => 403,
+                'message' => 'Go, Away!'
+            );
+            $this->output->set_status_header(403)->set_content_type('application/json')->set_output(json_encode($error));
+        }
+    }
+
+    public function update()
+    {
+        if ($this->session->userdata('user_session') && $this->session->userdata('user_session')['role'] == 'admin') {
+            $this->db->trans_start();
+            $obj = json_decode(file_get_contents('php://input'), TRUE);
+            $data = array(
+                'is_deleted' => 1,
+                'updated_by' => $this->session->userdata('user_session')['userId']
+            );
+            $this->category->update_by_id($obj['category_id'], $data);
+            $this->db->trans_complete();
+            $categories = $this->category->find_all_if_active();
+            $this->output->set_status_header(200)->set_content_type('application/json')->set_output(json_encode($categories, JSON_NUMERIC_CHECK));
         } else {
             $error = array(
                 'code' => 403,

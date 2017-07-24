@@ -1,7 +1,7 @@
 <div ng-controller="CategoriesAdminCtrl">
 
     <div class="alert alert-success" ng-show="responses.showNotif" ng-cloak>
-        <strong>Successfully insert new category</strong>
+        <strong>{{responses.message}}</strong>
     </div>
 
     <div ng-if="isLoading"><h3>Loading...</h3></div>
@@ -49,7 +49,7 @@
                         <tr ng-repeat="category in categories track by $index">
                             <td>{{$index+1}}</td>
                             <td>{{category.name}}</td>
-                            <td><button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></button></td>
+                            <td><button type="button" class="btn btn-danger" ng-click="removeCategory(category.id)"><span class="glyphicon glyphicon-remove-sign"></span></button></td>
                         </tr>
                     </tbody>
                 </table>

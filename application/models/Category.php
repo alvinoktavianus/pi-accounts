@@ -43,6 +43,12 @@ class Category extends CI_Model {
         return $result;
     }
 
+    public function update_by_id($id, $updateData)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('categories', $updateData);
+    }
+
 }
 
 /* End of file Category.php */
