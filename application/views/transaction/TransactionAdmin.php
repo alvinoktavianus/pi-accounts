@@ -1,4 +1,9 @@
 <div ng-controller="TransactionCtrl">
+
+    <div class="alert alert-success" ng-show="responses.showNotif" ng-cloak ng-class="{'alert-success': responses.isSuccess, 'alert-danger': !responses.isSuccess}">
+        <strong>{{responses.message}}</strong>
+    </div>
+
     <form name="transForm" novalidate="true" ng-submit="submitForm()" id="transformadmin">
         <div class="form-group">
           <ui-select ng-model="transaction.selected" theme="bootstrap" ng-disabled="!isSelectable">
@@ -40,10 +45,10 @@
                             <input type="text" ng-model="item.name" class="form-control">
                         </td>
                         <td>
-                            <input type="number" ng-model="item.qty" class="form-control" ng-change="calcTotalPrice()">
+                            <input type="text" class="form-control" ng-model="item.qty" awnum num-int="11" num-fract="0" num-neg="false" num-sep="," num-thousand="true" num-thousand-sep="{{' '}}" ng-required="true" ng-change="calcTotalPrice()">
                         </td>
                         <td>
-                            <input type="number" ng-model="item.price" class="form-control" ng-change="calcTotalPrice()">
+                            <input type="text" class="form-control" ng-model="item.price" awnum num-int="11" num-fract="0" num-neg="false" num-sep="," num-thousand="true" num-thousand-sep="{{' '}}" ng-required="true" ng-change="calcTotalPrice()">
                         </td>
                         <td style="width: 80px;border: 0">
                             <button type="button" ng-click="removeItem(item)" ng-show="$index > 0" class="btn btn-danger" ng-cloak>Delete</button>

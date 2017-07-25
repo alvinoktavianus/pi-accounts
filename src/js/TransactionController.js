@@ -7,6 +7,11 @@ app.controller('TransactionCtrl', ['$scope', '$http', '$q', function($scope, $ht
     $scope.transaction.shipping_fee = 0;
     $scope.uiSelectPlaceholder = "Loading...";
     $scope.isSelectable = false;
+    $scope.responses = {
+        showNotif: false,
+        message: null,
+        isSuccess: false
+    };
 
     function init() {
         // get all users
@@ -44,7 +49,13 @@ app.controller('TransactionCtrl', ['$scope', '$http', '$q', function($scope, $ht
         }
         // console.log(data);
         $http.post(baseUrl+'/transactions/insert_new_transaction', data, {}).then(function(response) {
-            console.log(response);
+            $scope.responses.showNotif = true;
+            $scope.responses.message = "Successfully insert new transaction";
+            $scope.responses.isSuccess = true;
+        }, function() {
+            $scope.responses.showNotif = true;
+            $scope.responses.message = "Please re-check your data!";
+            $scope.responses.isSuccess = false;
         });
     };
 
