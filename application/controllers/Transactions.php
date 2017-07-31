@@ -69,6 +69,13 @@ class Transactions extends CI_Controller {
                 $results[$index]['details'] = $detail;
             }
             $this->output->set_content_type('application/json')->set_output(json_encode($results, JSON_NUMERIC_CHECK));
+        } else if ($this->session->userdata('user_session') && $this->session->userdata('user_session')['role'] == 'user') {
+            $results = $this->transaction->get_all_user_transaction($this->session->userdata('user_session')['userId']);
+            foreach ($results as $index => $trans) {
+                $detail = $this->transaction_detail->get_detail($trans['id']);
+                $results[$index]['details'] = $detail;
+            }
+            $this->output->set_content_type('application/json')->set_output(json_encode($results, JSON_NUMERIC_CHECK));
         } else {
             $error = array(
                 'code' => 403,

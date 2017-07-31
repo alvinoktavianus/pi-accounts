@@ -29,6 +29,15 @@ class Transaction extends CI_Model {
         $this->db->update('transactions', $data);
     }
 
+    public function get_all_user_transaction($userId)
+    {
+        $this->db->select('*');
+        $this->db->from('transactions');
+        $this->db->where('is_deleted', 0);
+        $this->db->where('user_id', $userId);
+        return $this->db->get()->result_array();
+    }
+
 }
 
 /* End of file Transaction.php */
