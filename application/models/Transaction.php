@@ -38,6 +38,12 @@ class Transaction extends CI_Model {
         return $this->db->get()->result_array();
     }
 
+    public function find_by_invoice_no($invoiceNo)
+    {
+        $this->db->where('invoice_no', $invoiceNo);
+        return $this->db->get('transactions')->result_array()[0];
+    }
+
 }
 
 /* End of file Transaction.php */

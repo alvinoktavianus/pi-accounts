@@ -120,6 +120,9 @@
                             case 'gallery':
                                 $this->load->view('gallery/GalleryUser', $viewData);
                                 break;
+                            case 'transaction':
+                                $this->load->view('transaction/TransactionUser', $viewData);
+                                break;
                             case 'profile':
                                 $this->load->view('profile/ProfileUser', $viewData);
                                 break;

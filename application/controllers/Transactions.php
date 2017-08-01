@@ -12,12 +12,25 @@ class Transactions extends CI_Controller {
 
 	public function index()
 	{
-		if ($this->session->userdata('user_session') && $this->session->userdata('user_session')['role'] == 'admin') {
+        if ($this->session->userdata('user_session')) {
             $data = array(
                 'pageKey' => 'transaction',
                 'title' => 'Transaction | Pro Importir',
                 'viewData' => array(),
             );
+            switch ($this->session->userdata('user_session')['role']) {
+                case 'admin':
+                    break;
+                case 'user':
+                    if (!empty($this->input->get('invoice_no'))) {
+                        $result = $this->transaction->find_by_invoice_no($this->input->get('invoice_no'));
+                        $result['details'] = $this->transaction_detail->get_detail($result['id']);
+                        $data['viewData'] = array(
+                            'transaction' => $result,
+                        );
+                    }
+                    break;
+            }
             $this->load->view('main', $data);
         } else {
             redirect('home','refresh');
