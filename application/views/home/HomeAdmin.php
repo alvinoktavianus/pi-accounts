@@ -42,7 +42,10 @@
                     </td>
                     <td>{{transaction.shipping_fee | number:0}}</td>
                     <td>{{transaction.total | number:0}}</td>
-                    <td><button type="button" ng-click="removeTransaction(transaction)" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button></td>
+                    <td>
+                        <button type="button" ng-click="updateTransaction(transaction)" class="btn btn-success" ng-if="transaction.status_id < status.length"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></button>
+                        <button type="button" ng-click="removeTransaction(transaction)" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></button>
+                    </td>
                 </tr>
             </tbody>
         </table>

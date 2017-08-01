@@ -456,6 +456,7 @@ $config['csrf_regenerate'] = TRUE;
 $config['csrf_exclude_uris'] = array(
     'transactions/insert_new_transaction',
     'transactions/delete',
+    'transactions/update',
     'categories/new',
     'categories/update'
 );

@@ -114,6 +114,34 @@ class Transactions extends CI_Controller {
         }
     }
 
+    public function update()
+    {
+        if ($this->session->userdata('user_session') && $this->session->userdata('user_session')['role'] == 'admin') {
+            $this->db->trans_start();
+            $obj = json_decode(file_get_contents('php://input'), TRUE);
+            $updatedData = array(
+                'status_id' => $obj['status_id'],
+                'updated_by' => $this->session->userdata('user_session')['userId']
+            );
+            $this->transaction->update_transaction($updatedData, $obj['transaction_id']);
+            $this->db->trans_complete();
+
+            // after updating data, fetch data back
+            $results = $this->transaction->get_all_active_transaction($this->session->userdata('user_session')['userId']);
+            foreach ($results as $index => $trans) {
+                $detail = $this->transaction_detail->get_detail($trans['id']);
+                $results[$index]['details'] = $detail;
+            }
+            $this->output->set_content_type('application/json')->set_output(json_encode($results, JSON_NUMERIC_CHECK));
+        } else {
+            $error = array(
+                'code' => 403,
+                'message' => 'Go, Away!'
+            );
+            $this->output->set_status_header(403)->set_content_type('application/json')->set_output(json_encode($error));
+        }
+    }
+
 }
 
 /* End of file Transactions.php */
