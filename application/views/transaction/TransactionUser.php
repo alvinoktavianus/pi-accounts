@@ -1,6 +1,9 @@
-<?php var_dump($transaction) ?>
-
-<h2><?php echo $transaction['invoice_no'] . ' - ' . $transaction['created_at']; ?></h2>
+<h2>
+<?php
+	$date = new DateTime($transaction['created_at']);
+	echo $transaction['invoice_no'] . ' - ' . $date->format('D, d M Y'); ?>
+		
+</h2>
 
 <table class="table table-hover" style="border: 2px solid black !important;max-width: 1000px">
 	<tr>
@@ -15,19 +18,19 @@
 		<td class="text-center"><?php echo $key+1; ?></td>
 		<td><?php echo $value['item_name']; ?></td>
 		<td class="text-center"><?php echo $value['quantity']; ?></td>
-		<td class="text-center"><?php echo $value['price']; ?></td>
-		<td class="text-center"><?php echo $value['quantity'] * $value['price']; ?></td>
+		<td class="text-center"><?php echo 'Rp. ' . number_format($value['price'], 2); ?></td>
+		<td class="text-center"><?php echo 'Rp. ' . number_format($value['quantity'] * $value['price'], 2); ?></td>
 	</tr>
 <?php } ?>
 	<tr>
 		<td colspan="3"></td>
 		<td class="text-center"><strong>ONGKOS KIRIM</strong></td>
-		<td class="text-center"><?php echo $transaction['shipping_fee']; ?></td>
+		<td class="text-center"><?php echo 'Rp. ' . number_format($transaction['shipping_fee'], 2); ?></td>
 	</tr>
 	<tr>
 		<td colspan="3"></td>
 		<td class="text-center"><strong>GRAND TOTAL</strong></td>
-		<td class="text-center"><?php echo $transaction['total']; ?></td>
+		<td class="text-center"><?php echo 'Rp. ' . number_format($transaction['total'], 2); ?></td>
 	</tr>
 
 </table>
