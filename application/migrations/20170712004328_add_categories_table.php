@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Add_users extends CI_Migration {
+class Migration_Add_categories_table extends CI_Migration {
 
     public function __construct()
     {
@@ -18,23 +18,23 @@ class Migration_Add_users extends CI_Migration {
                  'unsigned' => true,
                  'auto_increment' => true
               ),
-              'email' => array(
+              'name' => array(
                  'type' => 'VARCHAR',
-                 'constraint' => '50',
-                 'unique' => true
+                 'constraint' => '50'
               ),
-              'first_name' => array(
-                 'type' => 'VARCHAR',
-                 'constraint' => '50',
+              'is_active' => array(
+                 'type' => 'BOOLEAN',
+                 'default' => true
               ),
-              'last_name' => array(
-                 'type' => 'VARCHAR',
-                 'constraint' => '50',
+              'is_deleted' => array(
+                 'type' => 'BOOLEAN',
+                 'default' => false
               ),
-              'role' => array(
-                 'type' => 'VARCHAR',
-                 'constraint' => '5',
-              )
+              'created_by' => array(
+                 'type' => 'INT',
+                 'constraint' => 5,
+                 'unsigned' => true
+              ),
             )
         );
 
@@ -42,14 +42,14 @@ class Migration_Add_users extends CI_Migration {
         $this->dbforge->add_field("updated_at TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP");
 
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('users', TRUE);
+        $this->dbforge->create_table('categories', TRUE);
     }
 
     public function down() {
-        $this->dbforge->drop_table('users');
+        $this->dbforge->drop_table('categories');
     }
 
 }
 
-/* End of file 20170709215450_add_users.php */
-/* Location: ./application/migrations/20170709215450_add_users.php */
+/* End of file 20170712004328_add_categories_table.php */
+/* Location: ./application/migrations/20170712004328_add_categories_table.php */

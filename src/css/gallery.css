@@ -1,0 +1,13 @@
+.imggal-satuan {
+	object-fit: cover;
+	width: 100%;
+	height: 250px;
+}
+
+.divgaladmin {
+	max-width: 450px;
+}
+
+@media screen and (max-device-width: 480px) {
+	.imggal-satuan { height: 170px; }
+}
