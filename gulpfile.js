@@ -56,14 +56,14 @@ gulp.task("minifyApplicationScripts", function () {
 });
 
 gulp.task("minifyVendorStyles", function () {
-    gulp.src("assets/css/vendor.css")
+    gulp.src(['assets/css/vendor-*.css'])
         .pipe(cleanCSS())
         .pipe(rename('vendor.min.css'))
         .pipe(gulp.dest("assets/css"));
 });
 
 gulp.task("minifyApplicationStyles", function () {
-    gulp.src(['assets/css/*.css'])
+    gulp.src(['assets/css/application.css'])
         .pipe(cleanCSS())
         .pipe(rename('application.min.css'))
         .pipe(gulp.dest("assets/css"));
