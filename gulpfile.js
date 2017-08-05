@@ -63,7 +63,7 @@ gulp.task("minifyVendorStyles", function () {
 });
 
 gulp.task("minifyApplicationStyles", function () {
-    gulp.src("assets/css/application.css")
+    gulp.src(['assets/css/*.css'])
         .pipe(cleanCSS())
         .pipe(rename('application.min.css'))
         .pipe(gulp.dest("assets/css"));
@@ -81,4 +81,5 @@ gulp.task("createDevScripts", ['concatVendorScripts', 'concatApplicationScripts'
 gulp.task("createProdScripts", ['createDevScripts', 'minifyVendorScripts', 'minifyApplicationScripts']);
 gulp.task("createDevStyles", ['compileVendorStyles', 'compileVendorStyleCss', 'compileApplicationStyles', 'copyFonts']);
 gulp.task("createProdStyles", ['createDevStyles', 'minifyVendorStyles', 'minifyApplicationStyles']);
-gulp.task("test", ['createDevScripts', 'createDevStyles'])
+gulp.task("test", ['createDevScripts', 'createDevStyles']);
+gulp.task("build", ['createProdScripts', 'createProdStyles']);
