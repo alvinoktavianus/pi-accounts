@@ -11,3 +11,6 @@ SetEnv DB_PASSWORD
 SetEnv DB_NAME      
 SetEnv ROOT_AUTH    
 SetEnv ROOT_ROLE    
+SetEnv SMTP_HOST
+SetEnv SMTP_USER
+SetEnv SMTP_PASS
