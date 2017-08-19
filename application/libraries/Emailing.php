@@ -3,32 +3,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Emailing
 {
-    protected $config;
+    private $ci;
+    private $config;
 
     public function __construct()
     {
+        $this->ci =& get_instance();
+        
         // initialize email configuration
         $this->config = array(
             'protocol' => 'smtp',
-            'smtp_host' => $this->input->server('SMTP_HOST'),
-            'smtp_user' => $this->input->server('SMTP_USER'),
-            'smtp_pass' => $this->input->server('SMTP_PASS'),
+            'smtp_host' => $_SERVER['SMTP_HOST'],
+            'smtp_user' => $_SERVER['SMTP_USER'],
+            'smtp_pass' => $_SERVER['SMTP_PASS'],
             'mailtype' => 'html',
-            'smtp_port' => $this->input->server('SetEnv SMTP_PORT'),
+            'smtp_port' => $_SERVER['SMTP_PORT'],
         );
 
-        $this->load->library('email', $config);
+        $this->ci->load->library('email', $this->config);
     }
 
     public function send_email($emailTo, $subject, $msg)
     {   
-        $this->email->from($this->input->server('EMAIL_FROM'), $this->input->server('EMAIL_ALIAS'));
-        $this->email->to($emailTo);
+        $this->ci->email->from($_SERVER['EMAIL_FROM'], $_SERVER['EMAIL_ALIAS']);
+        $this->ci->email->to($emailTo);
         
-        $this->email->subject($subject);
-        $this->email->message($msg);
+        $this->ci->email->subject($subject);
+        $this->ci->email->message($msg);
         
-        $this->email->send();
+        $this->ci->email->send();
 
         // TODO: create log table to log all outgoing email
     }    
