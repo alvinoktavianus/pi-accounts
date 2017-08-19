@@ -14,7 +14,7 @@ class Emailing
             'smtp_user' => $this->input->server('SMTP_USER'),
             'smtp_pass' => $this->input->server('SMTP_PASS'),
             'mailtype' => 'html',
-            'smtp_port' => 587
+            'smtp_port' => $this->input->server('SetEnv SMTP_PORT'),
         );
 
         $this->load->library('email', $config);
@@ -22,7 +22,7 @@ class Emailing
 
     public function send_email($emailTo, $subject, $msg)
     {   
-        $this->email->from('email@email.com', 'Name');
+        $this->email->from($this->input->server('EMAIL_FROM'), $this->input->server('EMAIL_ALIAS'));
         $this->email->to($emailTo);
         
         $this->email->subject($subject);
