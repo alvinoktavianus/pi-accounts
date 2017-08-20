@@ -46,6 +46,21 @@ class User extends CI_Model {
         return $this->db->get('users')->result();
     }
 
+    public function find_by_verify_token($verifyToken)
+    {
+        $this->db->trans_start();
+        $this->db->where('verify_token', $verifyToken);
+        $user = $this->db->get('users')->result();
+        $this->db->trans_complete();
+        return $user;
+    }
+
+    public function update_by_id($id, $object)
+    {
+        $this->db->where('id', $id);
+        $this->db->update('users', $object);
+    }
+
 }
 
 /* End of file User.php */

@@ -37,13 +37,19 @@ class Login extends CI_Controller {
                     $this->session->set_flashdata('errors', $error);
                     redirect('login','refresh');
                 } else if (password_verify($password, $resultUser[0]->password) && !password_verify($resultUser[0]->role, $this->input->server('ROOT_ROLE'))) {
-                    $data = array(
-                        'role' => $resultUser[0]->role,
-                        'userId' => $resultUser[0]->id,
-                        'first_name' => $resultUser[0]->first_name
-                    );
-                    $this->session->set_userdata('user_session', $data);
-                    redirect('home','refresh');
+                    if ($resultUser[0]->is_confirmed == 1) {
+                        $data = array(
+                            'role' => $resultUser[0]->role,
+                            'userId' => $resultUser[0]->id,
+                            'first_name' => $resultUser[0]->first_name
+                        );
+                        $this->session->set_userdata('user_session', $data);
+                        redirect('home','refresh');
+                    } else if ($resultUser[0]->password == 0) {
+                        $error = "Please verify your email address. Check your inbox or spam.";
+                        $this->session->set_flashdata('errors', $error);
+                        redirect('login','refresh');
+                    }
                 }
             }
 
