@@ -38,7 +38,7 @@ class Register extends CI_Controller {
                 $this->session->set_flashdata('errors', $errors);
                 redirect('register','refresh');
             } else {
-                $emailToken = $this->utility->generateToken(30);
+                $emailToken = $this->utility->generateToken(25);
 
                 $userData = array(
                     'email' => $this->input->post('email'),

@@ -15,7 +15,7 @@ class Verify_email extends CI_Controller {
         if (!$this->session->userdata('user_session') && isset($token)) {
             $userData = $this->user->find_by_verify_token($token);
 
-            if (count($userData) == 1 && $userData[0]->verify_token == 0) {
+            if (count($userData) == 1 && $userData[0]->is_confirmed == 0) {
 
                 $updated = array(
                     'is_confirmed' => 1
@@ -26,11 +26,12 @@ class Verify_email extends CI_Controller {
 
                 $this->session->set_flashdata('success', 'Successfully verified your account.');
 
-            } else if (count($userData) == 1 && $userdata[0]->verify_token == 1) {
+            } else if (count($userData) == 1 && $userData[0]->is_confirmed == 1) {
                 $error = "You already verified your email";
                 $this->session->set_flashdata('errors', $error);
-                redirect('login','refresh');
             }
+            
+            redirect('login','refresh');
         } else {
             redirect('home','refresh');
         }
