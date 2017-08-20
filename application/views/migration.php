@@ -6,7 +6,7 @@
 <body>
 
 <h1>Warning!</h1>
-<p>A valid is credentials is required to do this operation</p>
+<p>A valid credentials is required to do this operation.</p>
 
 <?php echo form_open(base_url("migrate/confirm")); ?>
 <?php echo form_input(array('placeholder' => 'Email', 'required' => true, 'type' => 'email', 'name' => 'email')); ?><br/>
