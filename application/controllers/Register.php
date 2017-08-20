@@ -7,6 +7,8 @@ class Register extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('user');
+        $this->load->library('utility');
+        $this->load->library('emailing');
     }
 
 	public function index()
@@ -36,17 +38,24 @@ class Register extends CI_Controller {
                 $this->session->set_flashdata('errors', $errors);
                 redirect('register','refresh');
             } else {
+                $emailToken = $this->utility->generateToken(30);
+
                 $userData = array(
                     'email' => $this->input->post('email'),
                     'first_name' => $this->input->post('first_name'),
                     'last_name' => $this->input->post('last_name'),
                     'role' => 'user',
                     'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
+                    'verify_token' => $emailToken,
                 );
                 $this->db->trans_start();
                 $this->user->insert_new_user($userData);
                 $this->db->trans_complete();
-                $this->session->set_flashdata('success', 'Successfully register new account. Welcome to Pro Importir.');
+
+                $msg = $this->load->view('email_templates/verify_email', array('verifyEmailUrl' => base_url('verify_email').'?verify_token='.$emailToken), TRUE);
+                $this->emailing->send_email($this->input->post('email'), 'Verify Email', $msg);
+
+                $this->session->set_flashdata('success', 'Successfully register new account. Please verify your email.');
             }
             redirect('register','refresh');
         } else {

@@ -13,7 +13,7 @@ class Migration_Add_verify_email_to_users extends CI_Migration {
         $fields = array(
             'verify_token' => array(
                 'type' => 'VARCHAR',
-                'constraint' => 50
+                'constraint' => 25
             ),
             'is_confirmed' => array(
                 'type' => 'BOOLEAN',
