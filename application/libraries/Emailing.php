@@ -18,6 +18,7 @@ class Emailing
             'smtp_pass' => $_SERVER['SMTP_PASS'],
             'mailtype' => 'html',
             'smtp_port' => $_SERVER['SMTP_PORT'],
+            'charset'   => 'iso-8859-1'
         );
 
         $this->ci->load->library('email', $this->config);
