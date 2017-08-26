@@ -1,85 +1,125 @@
-'use strict';
+var gulp = require('gulp');
+var less = require('gulp-less');
+var browserSync = require('browser-sync').create();
+var header = require('gulp-header');
+var cleanCSS = require('gulp-clean-css');
+var rename = require("gulp-rename");
+var uglify = require('gulp-uglify');
+var pkg = require('./package.json');
+var concat = require('gulp-concat');
 
-var gulp = require('gulp'),
-    concat = require('gulp-concat'),
-    mainBowerFiles = require('main-bower-files'),
-    uglify = require('gulp-uglify'),
-    rename = require('gulp-rename'),
-    less = require('gulp-less'),
-    cleanCSS = require('gulp-clean-css'),
-    jsFiles = ['src/js/*'];
+// Set the banner content
+var banner = ['/*!\n',
+    ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
+    ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
+    ' * Licensed under <%= pkg.license.type %> (<%= pkg.license.url %>)\n',
+    ' */\n',
+    ''
+].join('');
 
-gulp.task("concatVendorScripts", function () {
-    gulp.src(mainBowerFiles({ filter: '**/*.js' }))
-        .pipe(concat("vendor.js"))
-        .pipe(gulp.dest("assets/js"));
-});
-
-gulp.task("concatApplicationScripts", function () {
-    gulp.src(['src/js/*.js'])
-        .pipe(concat("application.js"))
-        .pipe(gulp.dest("assets/js"));
-});
-
-gulp.task("compileVendorStyleCss", function () {
-    gulp.src(mainBowerFiles({ filter: '**/*.css' }))
-        .pipe(concat("vendor-css.css"))
-        .pipe(gulp.dest("assets/css"));
-});
-
-gulp.task("compileVendorStyles", function () {
-    gulp.src(mainBowerFiles({ filter: '**/*.less' }))
+// Compile LESS files from /less into /css
+gulp.task('less', function() {
+    return gulp.src('src/less/sb-admin-2.less')
         .pipe(less())
-        .pipe(concat("vendor-less.css"))
-        .pipe(gulp.dest("assets/css"));
+        .pipe(header(banner, { pkg: pkg }))
+        .pipe(gulp.dest('assets/css'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
 });
 
-gulp.task("compileApplicationStyles", function () {
-    gulp.src(['src/css/*.css'])
-        .pipe(less())
-        .pipe(concat("application.css"))
-        .pipe(gulp.dest("assets/css"));
+// Minify compiled CSS
+gulp.task('minify-css', ['less'], function() {
+    return gulp.src('assets/css/sb-admin-2.css')
+        .pipe(cleanCSS({ compatibility: 'ie8' }))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest('assets/css'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
 });
 
-gulp.task("minifyVendorScripts", function () {
-    gulp.src("assets/js/vendor.js")
+// Copy JS to dist
+gulp.task('js', function() {
+    return gulp.src(['src/js/*.js'])
+        .pipe(concat('application.js'))
+        .pipe(header(banner, { pkg: pkg }))
+        .pipe(gulp.dest('assets/js'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
+})
+
+// Minify JS
+gulp.task('minify-js', ['js'], function() {
+    return gulp.src('assets/js/application.js')
         .pipe(uglify())
-        .pipe(rename('vendor.min.js'))
-        .pipe(gulp.dest("assets/js"));
+        .pipe(header(banner, { pkg: pkg }))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(gulp.dest('assets/js'))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
 });
 
-gulp.task("minifyApplicationScripts", function () {
-    gulp.src("assets/js/application.js")
-        .pipe(uglify())
-        .pipe(rename('application.min.js'))
-        .pipe(gulp.dest("assets/js"));
-});
+// Copy vendor libraries from /bower_components into /assets/vendor
+gulp.task('copy', function() {
+    gulp.src(['bower_components/bootstrap/dist/**/*', '!**/npm.js', '!**/bootstrap-theme.*', '!**/*.map'])
+        .pipe(gulp.dest('assets/vendor/bootstrap'))
 
-gulp.task("minifyVendorStyles", function () {
-    gulp.src(['assets/css/vendor-*.css'])
-        .pipe(cleanCSS())
-        .pipe(rename('vendor.min.css'))
-        .pipe(gulp.dest("assets/css"));
-});
+    gulp.src(['bower_components/bootstrap-social/*.css', 'bower_components/bootstrap-social/*.less', 'bower_components/bootstrap-social/*.scss'])
+        .pipe(gulp.dest('assets/vendor/bootstrap-social'))
 
-gulp.task("minifyApplicationStyles", function () {
-    gulp.src(['assets/css/application.css'])
-        .pipe(cleanCSS())
-        .pipe(rename('application.min.css'))
-        .pipe(gulp.dest("assets/css"));
-});
+    gulp.src(['bower_components/datatables/media/**/*'])
+        .pipe(gulp.dest('assets/vendor/datatables'))
 
-gulp.task('copyFonts', function() {
-    gulp.src([
-            'bower_components/bootstrap/fonts/glyphicons-halflings-regular.*'
-        ])
-        .pipe(gulp.dest('assets/fonts/'));
-});
+    gulp.src(['bower_components/datatables-plugins/integration/bootstrap/3/*'])
+        .pipe(gulp.dest('assets/vendor/datatables-plugins'))
 
-// Single task
-gulp.task("createDevScripts", ['concatVendorScripts', 'concatApplicationScripts']);
-gulp.task("createProdScripts", ['createDevScripts', 'minifyVendorScripts', 'minifyApplicationScripts']);
-gulp.task("createDevStyles", ['compileVendorStyles', 'compileVendorStyleCss', 'compileApplicationStyles', 'copyFonts']);
-gulp.task("createProdStyles", ['createDevStyles', 'minifyVendorStyles', 'minifyApplicationStyles']);
-gulp.task("test", ['createDevScripts', 'createDevStyles']);
-gulp.task("build", ['createProdScripts', 'createProdStyles']);
+    gulp.src(['bower_components/datatables-responsive/css/*', 'bower_components/datatables-responsive/js/*'])
+        .pipe(gulp.dest('assets/vendor/datatables-responsive'))
+
+    gulp.src(['bower_components/flot/*.js'])
+        .pipe(gulp.dest('assets/vendor/flot'))
+
+    gulp.src(['bower_components/flot.tooltip/js/*.js'])
+        .pipe(gulp.dest('assets/vendor/flot-tooltip'))
+
+    gulp.src(['bower_components/font-awesome/**/*', '!bower_components/font-awesome/*.json', '!bower_components/font-awesome/.*'])
+        .pipe(gulp.dest('assets/vendor/font-awesome'))
+
+    gulp.src(['bower_components/jquery/dist/jquery.js', 'bower_components/jquery/dist/jquery.min.js'])
+        .pipe(gulp.dest('assets/vendor/jquery'))
+
+    gulp.src(['bower_components/metisMenu/dist/*'])
+        .pipe(gulp.dest('assets/vendor/metisMenu'))
+
+    gulp.src(['bower_components/morrisjs/*.js', 'bower_components/morrisjs/*.css', '!bower_components/morrisjs/Gruntfile.js'])
+        .pipe(gulp.dest('assets/vendor/morrisjs'))
+
+    gulp.src(['bower_components/raphael/raphael.js', 'bower_components/raphael/raphael.min.js'])
+        .pipe(gulp.dest('assets/vendor/raphael'))
+
+})
+
+// Run everything
+gulp.task('default', ['minify-css', 'minify-js', 'copy']);
+
+// Configure the browserSync task
+gulp.task('browserSync', function() {
+    browserSync.init({
+        server: {
+            baseDir: ''
+        },
+    })
+})
+
+// Dev task with browserSync
+gulp.task('dev', ['browserSync', 'less', 'minify-css', 'js', 'minify-js'], function() {
+    gulp.watch('less/*.less', ['less']);
+    gulp.watch('dist/css/*.css', ['minify-css']);
+    gulp.watch('js/*.js', ['minify-js']);
+    // Reloads the browser whenever HTML or JS files change
+    gulp.watch('pages/*.html', browserSync.reload);
+    gulp.watch('dist/js/*.js', browserSync.reload);
+});
