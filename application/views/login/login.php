@@ -1,3 +1,9 @@
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="alert alert-success" role="alert">
+        <strong><?php echo $this->session->flashdata('success'); ?></strong>
+    </div>
+<?php endif; ?>
+
 <?php if ($this->session->flashdata('errors')): ?>
     <div class="alert alert-danger" role="alert">
         <strong><?php echo $this->session->flashdata('errors'); ?></strong>
