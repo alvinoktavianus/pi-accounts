@@ -39,7 +39,7 @@ class Reset_password extends CI_Controller {
         if (!$this->session->userdata('user_session') && isset($token)) {
             $userData = $this->user->find_by_reset_token($token);
 
-            if (count($userData) == 1 && $userData[0]->is_confirmed == 0) {
+            if (count($userData) == 1 && $userData[0]->is_confirmed == 1) {
 
                 $updated = array(
                     'password' => password_hash($this->input->post('new-password'), PASSWORD_BCRYPT),
@@ -49,11 +49,14 @@ class Reset_password extends CI_Controller {
                 $this->user->update_by_id($userData[0]->id, $updated);
                 $this->db->trans_complete();
 
+                $this->session->set_flashdata('success', 'Successully update your password.');
+
             } else if (count($userData) == 1 && $userData[0]->is_confirmed == 1) {
                 $error = "Something wrong with your request.";
                 $this->session->set_flashdata('errors', $error);
-                redirect('login','refresh');
             }
+
+            redirect('login','refresh');
             
         }
     }
