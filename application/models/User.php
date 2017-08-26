@@ -61,6 +61,15 @@ class User extends CI_Model {
         $this->db->update('users', $object);
     }
 
+    public function find_by_reset_token($resetToken)
+    {
+        $this->db->trans_start();
+        $this->db->where('reset_token', $resetToken);
+        $user = $this->db->get('users')->result();
+        $this->db->trans_complete();
+        return $user;
+    }
+
 }
 
 /* End of file User.php */
