@@ -7,6 +7,7 @@ var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
 var pkg = require('./package.json');
 var concat = require('gulp-concat');
+var mainBowerFiles = require('main-bower-files');
 
 // Set the banner content
 var banner = ['/*!\n',
@@ -64,46 +65,53 @@ gulp.task('minify-js', ['js'], function() {
 
 // Copy vendor libraries from /bower_components into /assets/vendor
 gulp.task('copy', function() {
-    gulp.src(['bower_components/bootstrap/dist/**/*', '!**/npm.js', '!**/bootstrap-theme.*', '!**/*.map'])
-        .pipe(gulp.dest('assets/vendor/bootstrap'))
 
-    gulp.src(['bower_components/bootstrap-social/*.css', 'bower_components/bootstrap-social/*.less', 'bower_components/bootstrap-social/*.scss'])
-        .pipe(gulp.dest('assets/vendor/bootstrap-social'))
+    gulp.src(mainBowerFiles({ filter: '**/*.js' }))
+        .pipe(concat("vendor.js"))
+        .pipe(gulp.dest("assets/js"));
 
-    gulp.src(['bower_components/datatables/media/**/*'])
-        .pipe(gulp.dest('assets/vendor/datatables'))
+    gulp.src(mainBowerFiles({ filter: '**/*.css' }))
+        .pipe(concat("vendor-css.css"))
+        .pipe(gulp.dest("assets/css"));
 
-    gulp.src(['bower_components/datatables-plugins/integration/bootstrap/3/*'])
-        .pipe(gulp.dest('assets/vendor/datatables-plugins'))
+    gulp.src([
+            'bower_components/bootstrap/less/bootstrap.less',
+            'bower_components/font-awesome/less/font-awesome.less',
+        ])
+        .pipe(less())
+        .pipe(concat("vendor-less.css"))
+        .pipe(gulp.dest("assets/css"));
 
-    gulp.src(['bower_components/datatables-responsive/css/*', 'bower_components/datatables-responsive/js/*'])
-        .pipe(gulp.dest('assets/vendor/datatables-responsive'))
+    gulp.src([
+            'bower_components/bootstrap/fonts/glyphicons-halflings-regular.*',
+            'bower_components/font-awesome/fonts/fontawesome-webfont.*'
+        ])
+        .pipe(gulp.dest('assets/fonts/'));
 
-    gulp.src(['bower_components/flot/*.js'])
-        .pipe(gulp.dest('assets/vendor/flot'))
+});
 
-    gulp.src(['bower_components/flot.tooltip/js/*.js'])
-        .pipe(gulp.dest('assets/vendor/flot-tooltip'))
+gulp.task('minVendorStyles', function() {
+    return gulp.src(['assets/css/vendor-*.css'])
+        .pipe(cleanCSS())
+        .pipe(rename('vendor.min.css'))
+        .pipe(gulp.dest("assets/css"))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
+});
 
-    gulp.src(['bower_components/font-awesome/**/*', '!bower_components/font-awesome/*.json', '!bower_components/font-awesome/.*'])
-        .pipe(gulp.dest('assets/vendor/font-awesome'))
-
-    gulp.src(['bower_components/jquery/dist/jquery.js', 'bower_components/jquery/dist/jquery.min.js'])
-        .pipe(gulp.dest('assets/vendor/jquery'))
-
-    gulp.src(['bower_components/metisMenu/dist/*'])
-        .pipe(gulp.dest('assets/vendor/metisMenu'))
-
-    gulp.src(['bower_components/morrisjs/*.js', 'bower_components/morrisjs/*.css', '!bower_components/morrisjs/Gruntfile.js'])
-        .pipe(gulp.dest('assets/vendor/morrisjs'))
-
-    gulp.src(['bower_components/raphael/raphael.js', 'bower_components/raphael/raphael.min.js'])
-        .pipe(gulp.dest('assets/vendor/raphael'))
-
-})
+gulp.task('minVendorScript', function() {
+    return gulp.src("assets/js/vendor.js")
+        .pipe(uglify())
+        .pipe(rename('vendor.min.js'))
+        .pipe(gulp.dest("assets/js"))
+        .pipe(browserSync.reload({
+            stream: true
+        }));
+});
 
 // Run everything
-gulp.task('default', ['minify-css', 'minify-js', 'copy']);
+gulp.task('default', ['minify-css', 'minify-js', 'copy', 'minVendorStyles', 'minVendorScript']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
