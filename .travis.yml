@@ -17,7 +17,7 @@ install:
 
 script:
   - composer update
-  - gulp test
+  - gulp
 
 dist:
   - trusty
