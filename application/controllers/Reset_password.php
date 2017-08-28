@@ -40,7 +40,7 @@ class Reset_password extends CI_Controller {
     public function submit($value='')
     {
         if (!$this->session->userdata('user_session')) {
-            $email = $this->input->post('current-email');
+            $email = $this->input->post('currentEmail');
 
             $userData = $this->user->find_by_email($email);
 
@@ -62,6 +62,7 @@ class Reset_password extends CI_Controller {
 
             } else {
                 // TODO: mesti diupdate dengan kasih flash message klo email ga ada atau blm di confirm
+                $this->session->set_flashdata('errors', 'Cannot process your request.');
                 redirect('reset_password','refresh');
             }
         }
