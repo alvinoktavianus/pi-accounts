@@ -75,7 +75,7 @@
                     'name' => 'password', 'ng-model' => 'login.password', 'placeholder' => 'Password',
                     'ng-required' => true, 'ng-minlength' => 6, 'class' => 'form-control'
                 );
-                echo form_input('password', '', $inputForm);
+                echo form_password('password', '', $inputForm);
             ?>
             <span ng-show="!loginForm.password.$pristine && (loginForm.password.$error.required || loginForm.password.$error.minlength)" class="help-block" ng-cloak>Please enter your password</span>
         </div>
@@ -87,7 +87,15 @@
 <?php echo form_close(); ?>
 
 <a href="<?php echo base_url('register') ?>" class="btn btn-lg btn-primary btn-block" style="margin-top: 10px;">Register</a>
-<a href="<?php echo base_url('reset_password') ?>" class="btn btn-link btn-block" style="margin-top: 10px;">Forgot Password</a>
+
+<div class="row" style="margin-top: 10px;">
+    <div class="col-sm-6">
+        <a href="<?php echo base_url('resend_verification') ?>" class="btn btn-link btn-block">Resend Verification</a>
+    </div>
+    <div class="col-sm-6">
+        <a href="<?php echo base_url('reset_password') ?>" class="btn btn-link btn-block">Forgot Password</a>
+    </div>
+</div>
 
                     </div>
                 </div>
