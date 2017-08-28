@@ -86,6 +86,9 @@
     </fieldset>
 <?php echo form_close(); ?>
 
+<a href="<?php echo base_url('register') ?>" class="btn btn-lg btn-primary btn-block" style="margin-top: 10px;">Register</a>
+<a href="<?php echo base_url('reset_password') ?>" class="btn btn-link btn-block" style="margin-top: 10px;">Forgot Password</a>
+
                     </div>
                 </div>
             </div>
