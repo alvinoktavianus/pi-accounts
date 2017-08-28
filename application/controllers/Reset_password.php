@@ -72,26 +72,36 @@ class Reset_password extends CI_Controller {
     {
         $token = $this->input->get('reset_token');
         if (!$this->session->userdata('user_session') && isset($token)) {
-            $userData = $this->user->find_by_reset_token($token);
+            $this->form_validation->set_rules('newPassword', 'Password', 'trim|required|min_length[6]');
+            $this->form_validation->set_rules('newConfirmPassword', 'Confirm password', 'required|matches[newPassword]',
+                                               array('matches' => 'Password does not match.'));
 
-            if (count($userData) == 1 && $userData[0]->is_confirmed == 1) {
+            if (!$this->form_validation->run()) {
+                $errors = validation_errors();
+                $this->session->set_flashdata('errors', $errors);
+                redirect('reset_password?reset_token='.$token,'refresh');
+            } else {
+                $userData = $this->user->find_by_reset_token($token);
 
-                $updated = array(
-                    'password' => password_hash($this->input->post('new-password'), PASSWORD_BCRYPT),
-                    'reset_token' => null,
-                );
-                $this->db->trans_start();
-                $this->user->update_by_id($userData[0]->id, $updated);
-                $this->db->trans_complete();
+                if (count($userData) == 1 && $userData[0]->is_confirmed == 1) {
 
-                $this->session->set_flashdata('success', 'Successully update your password.');
+                    $updated = array(
+                        'password' => password_hash($this->input->post('newPassword'), PASSWORD_BCRYPT),
+                        'reset_token' => null,
+                    );
+                    $this->db->trans_start();
+                    $this->user->update_by_id($userData[0]->id, $updated);
+                    $this->db->trans_complete();
 
-            } else if (count($userData) == 1 && $userData[0]->is_confirmed == 1) {
-                $error = "Something wrong with your request.";
-                $this->session->set_flashdata('errors', $error);
+                    $this->session->set_flashdata('success', 'Successully update your password.');
+
+                } else if (count($userData) == 1 && $userData[0]->is_confirmed == 1) {
+                    $error = "Something wrong with your request.";
+                    $this->session->set_flashdata('errors', $error);
+                }
+
+                redirect('login','refresh');
             }
-
-            redirect('login','refresh');
             
         }
     }

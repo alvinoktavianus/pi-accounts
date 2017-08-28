@@ -57,7 +57,6 @@
 <?php echo form_open(base_url('reset_password/update').'?reset_token='.$resetToken, array('name' => 'newPasswordForm', 'novalidate' => 'true', )); ?>
     <fieldset>
 
-
         <div class="form-group" ng-class="{ 'has-error' : newPasswordForm.newPassword.$invalid && !newPasswordForm.newPassword.$pristine, 'has-success': newPasswordForm.newPassword.$valid }">
             <?php
                 $inputForm = array(
