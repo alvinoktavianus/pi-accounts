@@ -25,7 +25,7 @@
     <title>Reset Your Password | PRO Importir</title>
     <?php
         if ($this->input->server('CI_ENV') == 'development') {
-            echo link_tag(base_url('assets/css/vendor-less.css')) . link_tag(base_url('assets/css/vendor-css.css')) . link_tag(base_url('assets/css/sb-admin-2.css'));
+            echo link_tag(base_url('assets/css/vendor-less.css')) . link_tag(base_url('assets/css/vendor-css.css')) . link_tag(base_url('assets/css/sb-admin-2.css')) . link_tag(base_url('assets/css/application.css'));
         } else if ($this->input->server('CI_ENV') == 'production') {
             echo link_tag(base_url('assets/css/vendor.min.css')) . link_tag(base_url('assets/css/application.min.css'));
         }
