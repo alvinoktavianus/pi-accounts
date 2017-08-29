@@ -1,3 +1,11 @@
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+
+.top-10percent {
+    margin-top: 10%;
+}
+
+.img-logo {
+    max-width: 175px;
+}

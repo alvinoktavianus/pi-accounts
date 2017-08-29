@@ -17,6 +17,7 @@ class Transactions extends CI_Controller {
                 'pageKey' => 'transaction',
                 'title' => 'Transaction | Pro Importir',
                 'viewData' => array(),
+                'pageTitle' => 'Transaction',
             );
             switch ($this->session->userdata('user_session')['role']) {
                 case 'admin':
@@ -31,7 +32,7 @@ class Transactions extends CI_Controller {
                     }
                     break;
             }
-            $this->load->view('main', $data);
+            $this->load->view('main-logged-in', $data);
         } else {
             redirect('home','refresh');
         }

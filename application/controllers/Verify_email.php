@@ -18,7 +18,8 @@ class Verify_email extends CI_Controller {
             if (count($userData) == 1 && $userData[0]->is_confirmed == 0) {
 
                 $updated = array(
-                    'is_confirmed' => 1
+                    'is_confirmed' => 1,
+                    'verify_token' => null
                 );
                 $this->db->trans_start();
                 $this->user->update_by_id($userData[0]->id, $updated);

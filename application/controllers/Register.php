@@ -18,7 +18,7 @@ class Register extends CI_Controller {
                 'title' => 'Register | Pro Importir',
                 'pageKey' => 'register'
             );
-            $this->load->view('main', $data);
+            $this->load->view('register/new-register', $data);
         }
 	}
 
@@ -57,7 +57,7 @@ class Register extends CI_Controller {
 
                 $this->session->set_flashdata('success', 'Successfully register new account. Please verify your email.');
             }
-            redirect('register','refresh');
+            redirect('login','refresh');
         } else {
             redirect('home','refresh');
         }

@@ -10,7 +10,7 @@ class Login extends CI_Controller {
                 'title' => 'Login | Pro Importir',
                 'pageKey' => 'login'
             );
-            $this->load->view('main', $data);
+            $this->load->view('login/new-login', $data);
         }
     }
 
