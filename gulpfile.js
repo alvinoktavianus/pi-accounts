@@ -29,6 +29,19 @@ gulp.task('less', function() {
         }))
 });
 
+gulp.task('compileApplicationStyles', function () {
+    return gulp.src(['src/css/*.css'])
+        .pipe(concat("application.css"))
+        .pipe(gulp.dest("assets/css"));
+});
+
+gulp.task('minifyApplicationStyles', ['compileApplicationStyles'], function () {
+    return gulp.src(['assets/css/application.css'])
+        .pipe(cleanCSS())
+        .pipe(rename('application.min.css'))
+        .pipe(gulp.dest("assets/css"));
+});
+
 // Minify compiled CSS
 gulp.task('minify-css', ['less'], function() {
     return gulp.src('assets/css/sb-admin-2.css')
@@ -111,7 +124,7 @@ gulp.task('minVendorScript', function() {
 });
 
 // Run everything
-gulp.task('default', ['minify-css', 'minify-js', 'copy', 'minVendorStyles', 'minVendorScript']);
+gulp.task('default', ['minifyApplicationStyles', 'minify-css', 'minify-js', 'copy', 'minVendorStyles', 'minVendorScript']);
 
 // Configure the browserSync task
 gulp.task('browserSync', function() {
