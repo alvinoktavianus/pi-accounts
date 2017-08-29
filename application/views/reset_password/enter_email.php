@@ -36,6 +36,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
+                <p class="text-center top-10percent"><img src="https://www.proimportir.com/wp-content/uploads/2017/08/apps-logo.png" class="img-logo"></p>
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Please enter your email address to reset your password</h3>
