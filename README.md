@@ -8,5 +8,12 @@
 4. Copy **.htaccess** file `cp .htaccess.example .htaccess`
 5. Edit **.htaccess** to create local environment variable
 
+### Technology
+* CodeIgniter 3.1.5
+* NodeJS 7 (see `packages.json` for details)
+* Bower (see `bower.json` for details)
+* AngularJS 1.5
+
 ### Developer
-Alvin Oktavianus (agentsam1995@gmail.com)
+* Alvin Oktavianus (agentsam1995@gmail.com)
+* Anthony Michael (anthony9a2@gmail.com)
