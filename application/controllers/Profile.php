@@ -19,9 +19,10 @@ class Profile extends CI_Controller {
             $data = array(
                 'pageKey' => 'profile',
                 'title' => 'Profile | Pro Importir',
-                'viewData' => $viewData
+                'viewData' => $viewData,
+                'pageTitle' => 'User Profile'
             );
-            $this->load->view('main', $data);
+            $this->load->view('main-logged-in', $data);
         } else {
             redirect('home','refresh');
         }
