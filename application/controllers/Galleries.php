@@ -39,9 +39,10 @@ class Galleries extends CI_Controller {
         $data = array(
             'title' => 'Galleries | Pro Importir',
             'pageKey' => 'gallery',
-            'viewData' => $viewData
+            'viewData' => $viewData,
+            'pageTitle' => 'Categories',
         );
-        $this->load->view('main', $data);
+        $this->load->view('main-logged-in', $data);
     }
 
     public function do_add()
