@@ -15,8 +15,9 @@ class Categories extends CI_Controller {
             $data = array(
                 'pageKey' => 'category',
                 'title' => 'Categories | Pro Importir',
+                'pageTitle' => 'Categories'
             );
-            $this->load->view('main', $data);
+            $this->load->view('main-logged-in', $data);
         } else {
             redirect('home','refresh');
         }

@@ -22,7 +22,7 @@
         );
         echo meta($meta);
     ?>
-    <title>Reset Your Password | PRO Importir</title>
+    <title>Resend verification | PRO Importir</title>
     <?php
         if ($this->input->server('CI_ENV') == 'development') {
             echo link_tag(base_url('assets/css/vendor-less.css')) . link_tag(base_url('assets/css/vendor-css.css')) . link_tag(base_url('assets/css/sb-admin-2.css')) . link_tag(base_url('assets/css/application.css'));
@@ -39,7 +39,7 @@
                 <p class="text-center top-10percent"><img src="https://www.proimportir.com/wp-content/uploads/2017/08/apps-logo.png" class="img-logo"></p>
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Please enter your new password</h3>
+                        <h3 class="panel-title">Please enter your email address to resend email verification</h3>
                     </div>
                     <div class="panel-body">
 
@@ -55,35 +55,24 @@
     </div>
 <?php endif; ?>
 
-<?php echo form_open(base_url('reset_password/update').'?reset_token='.$resetToken, array('name' => 'newPasswordForm', 'novalidate' => 'true', )); ?>
+<?php echo form_open(base_url('resend_verification/submit'), array('name' => 'resendEmailForm', 'novalidate' => 'true', )); ?>
     <fieldset>
 
-        <div class="form-group" ng-class="{ 'has-error' : newPasswordForm.newPassword.$invalid && !newPasswordForm.newPassword.$pristine, 'has-success': newPasswordForm.newPassword.$valid }">
+        <div class="form-group" ng-class="{ 'has-error' : resendEmailForm.resendEmail.$invalid && !resendEmailForm.resendEmail.$pristine, 'has-success': resendEmailForm.resendEmail.$valid }">
             <?php
                 $inputForm = array(
-                    'ng-model' => 'regis.password',
-                    'ng-required' => true, 'ng-minlength' => 6,
-                    'class' => 'form-control', 'placeholder' => 'Password'
+                    'type' => 'email', 'id' => 'email', 'name' => 'resendEmail',
+                    'ng-required' => true, 'ng-model' => 'regis.email',
+                    'ng-pattern' => '/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/',
+                    'class' => 'form-control', 'placeholder' => 'E-mail address'
                 );
-                echo form_password('newPassword', '', $inputForm);
+                echo form_input($inputForm);
             ?>
-            <span ng-show="!newPasswordForm.newPassword.$pristine && (newPasswordForm.newPassword.$error.required || newPasswordForm.newPassword.$error.minlength)" class="help-block" ng-cloak>Please enter your password with 6 characters minimal</span>
+            <span ng-show="!resendEmailForm.resendEmail.$pristine && (resendEmailForm.resendEmail.$error.required || resendEmailForm.resendEmail.$error.pattern)" class="help-block" ng-cloak>Please enter your email address</span>
         </div>
 
-        <div class="form-group" ng-class="{ 'has-error' : newPasswordForm.newConfirmPassword.$invalid && !newPasswordForm.newConfirmPassword.$pristine, 'has-success': newPasswordForm.newConfirmPassword.$valid }">
-            <?php
-                $inputForm = array(
-                    'ng-model' => 'regis.confirmpassword',
-                    'ng-required' => true, 'ng-minlength' => 6, 'class' => 'form-control',
-                    'placeholder' => 'Confirm password', 'match-password' => "regis.password"
-                );
-                echo form_password('newConfirmPassword', '', $inputForm);
-            ?>
-            <span ng-show="!newPasswordForm.newConfirmPassword.$pristine && (newPasswordForm.newConfirmPassword.$error.matchPassword || newPasswordForm.newConfirmPassword.$error.minlength)" class="help-block" ng-cloak>Please enter your password again</span>
-        </div>
-
-        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="newPasswordForm.$invalid" ng-cloak>
-            Reset Password
+        <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="resendEmailForm.$invalid" ng-cloak>
+            Resend Email Verification
         </button>
         
     </fieldset>
@@ -110,27 +99,6 @@
         </script>  
         <script type="text/javascript" src="<?php echo base_url("assets/js/application.min.js"); ?>"></script>
     <?php endif; ?>
-
-<script type="text/javascript">
-    app.directive("matchPassword", function () {
-        return {
-            require: "ngModel",
-            scope: {
-                otherModelValue: "=matchPassword"
-            },
-            link: function(scope, element, attributes, ngModel) {
-
-                ngModel.$validators.matchPassword = function(modelValue) {
-                    return modelValue == scope.otherModelValue;
-                };
-
-                scope.$watch("otherModelValue", function() {
-                    ngModel.$validate();
-                });
-            }
-        };
-    });
-</script>
 
 </body>
 </html>

@@ -10,9 +10,10 @@ class Home extends CI_Controller {
         } else {
             $data = array(
                 'pageKey' => 'home',
-                'title' => 'Home | Pro Importir'
+                'title' => 'Home | Pro Importir',
+                'pageTitle' => 'Dashboard',
             );
-            $this->load->view('main', $data);
+            $this->load->view('main-logged-in', $data);
         }
     }
 
